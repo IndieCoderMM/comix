@@ -1,6 +1,10 @@
+import { getSession } from "@/utils/auth";
 import { IconArrowRight } from "@tabler/icons-react";
+import Link from "next/link";
 
-const Hero = () => {
+const Hero = async () => {
+  const session = await getSession();
+
   return (
     <div className="bg-white">
       <section className="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-24">
@@ -18,16 +22,25 @@ const Hero = () => {
                 Track your GitHub commits and earn rewards.
               </p>
 
-              <a
-                href="#"
-                title=""
-                className="mt-8 inline-flex items-center rounded-full bg-primary px-6 py-4 font-semibold text-white transition-all duration-200 hover:bg-secondary hover:text-black focus:bg-yellow-400 lg:mt-16"
-                role="button"
-              >
-                Join for free
-                <IconArrowRight />
-              </a>
-
+              {session ? (
+                <Link
+                  href="/dashboard"
+                  className="mt-8 inline-flex items-center rounded-full bg-primary px-6 py-4 font-semibold text-white transition-all duration-200 hover:bg-secondary hover:text-black focus:bg-yellow-400 lg:mt-16"
+                  role="button"
+                >
+                  Open Dashboard
+                </Link>
+              ) : (
+                <a
+                  href="#"
+                  title=""
+                  className="mt-8 inline-flex items-center rounded-full bg-primary px-6 py-4 font-semibold text-white transition-all duration-200 hover:bg-secondary hover:text-black focus:bg-yellow-400 lg:mt-16"
+                  role="button"
+                >
+                  Join for free
+                  <IconArrowRight />
+                </a>
+              )}
               <p className="mt-5 text-gray-600">
                 Already joined us?{" "}
                 <a

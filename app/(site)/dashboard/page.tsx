@@ -1,16 +1,18 @@
 import AccountStats from "@/features/dashboard/sections/account-stats";
-import { getSession } from "@/utils/auth";
+import { userService } from "@/services/user";
 
 const HomePage = async () => {
-  const session = await getSession();
+  const user = await userService.getAuthUser();
 
-  if (!session) {
+  console.log(user);
+
+  if (!user) {
     return null;
   }
 
   return (
     <main>
-      <AccountStats login={session.user.profile.login} />
+      <AccountStats login={user.ghLogin} />
     </main>
   );
 };
