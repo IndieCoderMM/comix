@@ -1,11 +1,11 @@
-import LogoutButton from "@/components/shared/logout-button";
 import SigninButton from "@/components/shared/signin-button";
+import UserButton from "@/components/shared/user-button";
 import { getSession } from "@/utils/auth";
 
 const Header = async () => {
   const session = await getSession();
   return (
-    <header className="max-container bg-[#FCF8F1] bg-opacity-30">
+    <header className="max-container">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
           <div className="flex-shrink-0">
@@ -13,11 +13,9 @@ const Header = async () => {
               Commitly
             </a>
           </div>
-          {session ? (
-            <LogoutButton text="Logout" />
-          ) : (
-            <SigninButton text="Join Now" />
-          )}
+          <div className="flex items-center gap-4">
+            {session ? <UserButton /> : <SigninButton text="Join Now" />}
+          </div>
         </div>
       </div>
     </header>
