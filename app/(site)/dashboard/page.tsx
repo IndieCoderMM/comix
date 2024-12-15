@@ -1,20 +1,24 @@
-import AccountStats from "@/features/dashboard/sections/account-stats";
-import { userService } from "@/services/user";
+"use client";
+import { trpc } from "@/utils/trpc";
 
-const HomePage = async () => {
-  const user = await userService.getAuthUser();
+const HomePage = () => {
+  const { data: user, isLoading } = trpc.user.getAuthUser.useQuery();
 
-  console.log(user);
-
-  if (!user) {
-    return null;
-  }
+  console.log("Query auth user: ", user);
 
   return (
     <main>
-      <AccountStats login={user.ghLogin} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : user ? (
+        <p>Authenticated as {user.ghLogin}</p>
+      ) : (
+        <p>Not authenticated</p>
+      )}
     </main>
   );
 };
 
+// <AccountStats login={user.ghLogin} />
+//
 export default HomePage;
