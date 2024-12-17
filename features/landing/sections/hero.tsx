@@ -14,7 +14,7 @@ const Hero = async () => {
               <p className="text-base font-semibold uppercase tracking-wider text-blue-600">
                 A new way to grow your skills
               </p>
-              <h1 className="mt-4 font-poppins text-h1 text-dark-gray">
+              <h1 className="mt-4 font-heading text-h1 text-dark-gray">
                 Commit to your goals with{" "}
                 <span className="text-primary">Commitly</span>
               </h1>

@@ -39,7 +39,7 @@ const StatItem = ({
         <Icon className={cn(`h-14 w-14`, fg)} />
       </div>
       <div className="ml-4">
-        <h3 className="font-poppins text-h5 text-dark-gray">{value}</h3>
+        <h3 className="font-heading text-h5 text-dark-gray">{value}</h3>
         <p className="text-body1 text-dark-gray">{title}</p>
       </div>
     </div>

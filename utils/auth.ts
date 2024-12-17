@@ -6,6 +6,7 @@ const getProfileInfo = (profile: GithubProfile): UserProfile => {
     id: profile.id.toString(),
     name: profile.name ?? profile.login,
     email: profile.email,
+    bio: profile.bio ?? "",
     login: profile.login,
     image: profile.avatar_url,
     followers: profile.followers,

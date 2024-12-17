@@ -20,6 +20,16 @@ class UserService {
     return this.createNewUser();
   }
 
+  /** Direct github profile from session **/
+  async getProfile() {
+    const session = await getSession();
+    if (!session?.user?.profile) {
+      throw new Error("Missing user profile");
+    }
+
+    return session.user.profile;
+  }
+
   private async createNewUser() {
     const session = await getSession();
     if (!session?.user?.profile) {

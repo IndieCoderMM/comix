@@ -1,20 +1,22 @@
-"use client";
-import { trpc } from "@/utils/trpc";
+import DailyChallenges from "@/features/dashboard/sections/daily-challenges";
+import Profile from "@/features/dashboard/sections/profile";
+import { getSession } from "@/utils/auth";
 
-const HomePage = () => {
-  const { data: user, isLoading } = trpc.user.getAuthUser.useQuery();
+const HomePage = async () => {
+  const session = await getSession();
 
-  console.log("Query auth user: ", user);
+  if (!session) {
+    return null;
+  }
 
   return (
-    <main>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : user ? (
-        <p>Authenticated as {user.ghLogin}</p>
-      ) : (
-        <p>Not authenticated</p>
-      )}
+    <main className="w-full">
+      <Profile />
+      <section className="max-container grid grid-cols-12">
+        <div className="md:col-span-6 lg:col-span-5">
+          <DailyChallenges />
+        </div>
+      </section>
     </main>
   );
 };

@@ -1,5 +1,67 @@
 export type ContributionData = { date: string; contributionCount: number };
 
+interface Repository {
+  name: string;
+  stargazerCount: number;
+  forkCount: number;
+}
+
+interface QueryResult {
+  data?: {
+    user?: {
+      repositories?: {
+        nodes?: Repository[];
+        totalCount?: number;
+      };
+      pullRequests?: {
+        totalCount?: number;
+      };
+    };
+  };
+}
+
+interface RepoStats {
+  totalStarsReceived: number;
+  totalForkedRepos: number;
+  mostStarredRepos: Repository[];
+  totalPrMerged: number;
+}
+
+export const extractRepoStats = (queryResult: QueryResult): RepoStats => {
+  const userData = queryResult?.data?.user;
+
+  const repositories = userData?.repositories?.nodes ?? [];
+  const totalForkedRepos = userData?.repositories?.totalCount ?? 0;
+  const totalPrMerged = userData?.pullRequests?.totalCount ?? 0;
+
+  let totalStarsReceived = 0;
+
+  const repoStarData: Repository[] = repositories.map((repo) => {
+    const stars = repo.stargazerCount || 0;
+    const forks = repo.forkCount || 0;
+    const name = repo.name || "Unnamed Repo";
+
+    totalStarsReceived += stars;
+
+    return {
+      name,
+      stargazerCount: stars,
+      forkCount: forks,
+    };
+  });
+
+  const mostStarredRepos = repoStarData.sort(
+    (a, b) => b.stargazerCount - a.stargazerCount,
+  );
+
+  return {
+    totalStarsReceived,
+    totalForkedRepos,
+    mostStarredRepos,
+    totalPrMerged,
+  };
+};
+
 export const extractContributions = (
   data: any,
 ): { total: number; data: ContributionData[] } => {

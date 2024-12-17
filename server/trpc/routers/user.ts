@@ -6,4 +6,7 @@ export const userRouter = router({
   getAuthUser: protectedProcedure.query(async ({ ctx }) => {
     return userService.getAuthUser();
   }),
+  getProfile: protectedProcedure.query(async ({ ctx }) => {
+    return userService.getProfile();
+  }),
 });

@@ -10,7 +10,7 @@ const Header = async () => {
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
           <div className="flex-shrink-0">
-            <a href="#" title="" className="font-poppins text-h5">
+            <a href="#" title="" className="font-heading text-h5">
               Commitly
             </a>
           </div>

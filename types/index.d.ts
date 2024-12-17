@@ -10,5 +10,6 @@ declare type UserProfile = {
   public_gists: number;
   total_private_repos?: number;
   owned_private_repos?: number;
+  bio?: string;
   disk_usage?: number;
 };
