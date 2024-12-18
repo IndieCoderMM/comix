@@ -1,3 +1,4 @@
+import SetupUser from "@/features/dashboard/components/setup-user";
 import DailyChallenges from "@/features/dashboard/sections/daily-challenges";
 import Profile from "@/features/dashboard/sections/profile";
 import { getSession } from "@/utils/auth";
@@ -17,6 +18,7 @@ const HomePage = async () => {
           <DailyChallenges />
         </div>
       </section>
+      <SetupUser />
     </main>
   );
 };

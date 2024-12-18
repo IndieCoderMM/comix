@@ -31,4 +31,10 @@ export const githubRouter = router({
 
     return languages;
   }),
+  getContributions: protectedProcedure.query(async ({ ctx }) => {
+    const login = ctx.session?.user?.profile.login;
+    const contributions = await githubService.getContributions(login);
+
+    return contributions;
+  }),
 });

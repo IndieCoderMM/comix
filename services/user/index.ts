@@ -1,5 +1,11 @@
-import { createUser, getUserByGhLogin } from "@/db/query/user";
+import {
+  claimCoins,
+  createUser,
+  getUserByGhLogin,
+  setupNewUser,
+} from "@/db/query/user";
 import { getSession } from "@/utils/auth";
+import { calculateLevel, getTitle } from "./helper";
 
 class UserService {
   /**
@@ -28,6 +34,41 @@ class UserService {
     }
 
     return session.user.profile;
+  }
+
+  async claimCoins(userId: number, coins: number) {
+    const result = await claimCoins(userId, coins);
+    console.log("Coins claimed", result);
+  }
+
+  /**
+   * Store initial contributions and assign level and title
+   */
+  async setupNewUser(contribution: number) {
+    const user = await this.getAuthUser();
+    if (user.exp && user.exp > 0) {
+      throw new Error("User already setup");
+    }
+    const { level, title } = this.calculateLevelTitle(contribution);
+
+    const updateUser = await setupNewUser({
+      id: user.id,
+      level,
+      title,
+      exp: contribution,
+      claimables: contribution,
+    });
+    console.log("User setup", updateUser);
+  }
+
+  /**
+   * Calculate user level and title from contribution
+   **/
+  private calculateLevelTitle(contribution: number) {
+    const { level } = calculateLevel(contribution);
+    const title = getTitle(level);
+
+    return { level: level, title: title };
   }
 
   private async createNewUser() {

@@ -4,8 +4,10 @@ import LocGoal from "@/features/stats/sections/loc-goal";
 const StatsPage = () => {
   return (
     <div className="w-full">
-      <LocGoal />
-      <Languages />
+      <div className="flex">
+        <LocGoal />
+        <Languages />
+      </div>
     </div>
   );
 };

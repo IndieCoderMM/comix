@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 export const GET_REPOS = gql`
   query ($login: String!) {
     user(login: $login) {
-      id
       repositories(
         isFork: false
         first: 100
