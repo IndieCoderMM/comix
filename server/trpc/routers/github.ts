@@ -1,8 +1,27 @@
 import { githubService } from "@/services/github";
+import { z } from "zod";
 import { protectedProcedure } from "../procedures";
 import { router } from "../trpc";
 
+const BASE_REPO = {
+  owner: "IndieCoderMM",
+  name: "commitly",
+};
+
 export const githubRouter = router({
+  starRepo: protectedProcedure
+    .input(z.object({ repoId: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await githubService.starRepo(input.repoId);
+
+      return res;
+    }),
+  getRepoStats: protectedProcedure.query(async ({ ctx }) => {
+    const login = ctx.session?.user?.profile.login;
+    const repos = await githubService.getRepoStats(login);
+
+    return repos;
+  }),
   getTodayLOC: protectedProcedure.query(async ({ ctx }) => {
     const login = ctx.session?.user?.profile.login;
     const today = new Date();
@@ -12,6 +31,14 @@ export const githubRouter = router({
     );
 
     return { additions, deletions };
+  }),
+  getBaseRepo: protectedProcedure.query(async ({ ctx }) => {
+    const { id, stargazers } = await githubService.getRepoMetadata(
+      BASE_REPO.owner,
+      BASE_REPO.name,
+    );
+
+    return { id, stargazers };
   }),
   getWeeklyLOC: protectedProcedure.query(async ({ ctx }) => {
     const login = ctx.session?.user?.profile.login;

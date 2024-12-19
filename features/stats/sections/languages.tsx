@@ -6,7 +6,7 @@ const Languages = () => {
   const { data: languages } = trpc.github.getLanguages.useQuery();
 
   return (
-    <section className="max-container p-4 lg:p-8">
+    <section className="w-full">
       <LanguageChart data={languages ?? []} />
     </section>
   );

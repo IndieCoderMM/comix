@@ -1,11 +1,9 @@
 import { getSession } from "@/utils/auth";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { extractContributions, extractLanguages } from "./helper";
+import { STAR_REPO } from "./mutation";
 import {
-  extractContributions,
-  extractLanguages,
-  extractRepoStats,
-} from "./helper";
-import {
+  GET_BASE_REPO,
   GET_COMMITS,
   GET_CONTRIBUTIONS,
   GET_LANGUAGES,
@@ -35,6 +33,49 @@ class GithubService {
     });
 
     return this.client;
+  }
+
+  async starRepo(repoId: string) {
+    const client = await this.getClient();
+    const res = await client.mutate({
+      mutation: STAR_REPO,
+      variables: { repoId },
+    });
+
+    console.log("Starred repo:", res);
+    return res;
+  }
+
+  async getRepoMetadata(login: string, repo: string) {
+    const client = await this.getClient();
+    let cursor: string | null = null;
+    type StarGazer = { id: string; login: string };
+    let stargazers: StarGazer[] = [];
+    let hasNextPage = true;
+    let id = "";
+
+    do {
+      const { data } = await client.query({
+        query: GET_BASE_REPO,
+        variables: { owner: login, name: repo, after: cursor },
+      });
+
+      const stars = data.repository.stargazers.edges as any;
+      for (const star of stars) {
+        stargazers.push({ id: star.node.id, login: star.node.login });
+      }
+
+      const repoId = data.repository.id as string;
+      if (id === "" && repoId) {
+        id = repoId;
+      }
+
+      hasNextPage = data.repository.stargazers.pageInfo.hasNextPage as any;
+      const endCursor = data.repository.stargazers.pageInfo.endCursor as any;
+      cursor = hasNextPage ? endCursor : null;
+    } while (cursor);
+
+    return { stargazers, id };
   }
 
   async getUserID(login: string) {
@@ -70,10 +111,10 @@ class GithubService {
 
   async getWeeklyLOC(login: string) {
     const userId = await this.getUserID(login);
-    console.log("Getting updated repos...");
+    // console.log("Getting updated repos...");
     const updatedRepos = await this.getUpdatedReposFromLastWeek(login);
 
-    console.log("Updated repos:", updatedRepos);
+    // console.log("Updated repos:", updatedRepos);
 
     const weeklyCalendar = new Map<
       string,
@@ -87,7 +128,7 @@ class GithubService {
     for (const repo of updatedRepos) {
       const locData = await this.getWeeklyRepoLOC(login, repo.name, userId);
 
-      console.log("LOC data for", repo.name, ":", locData);
+      // console.log("LOC data for", repo.name, ":", locData);
 
       for (const { date, additions, deletions } of locData) {
         if (!weeklyCalendar.has(date)) {
@@ -257,14 +298,74 @@ class GithubService {
     return { additions: totalAdditions, deletions: totalDeletions };
   }
 
+  /**
+   * Get user's repo stats (total stars, forks, repos, and merged PRs)
+   */
   async getRepoStats(login: string) {
     const client = await this.getClient();
-    const { data } = await client.query({
-      query: GET_REPOS,
-      variables: { login },
-    });
+    let totalStars = 0;
+    let totalForks = 0;
+    let totalRepos = 0;
+    let totalPrMerged = 0;
+    let totalDiskUsage = 0;
+    let hasNextPage = true;
+    let cursor: string | null = null;
+    let mostStarredRepos = [];
+    let mostForkedRepos = [];
 
-    return extractRepoStats(data);
+    while (hasNextPage) {
+      const { data } = await client.query({
+        query: GET_REPOS,
+        variables: { login, cursor },
+      });
+
+      const repositories = data.user.repositories as any;
+      const pullRequests = data.user.pullRequests as any;
+
+      if (!repositories) {
+        break;
+      }
+
+      totalRepos += repositories.totalCount || 0;
+      totalPrMerged += pullRequests.totalCount || 0;
+
+      totalDiskUsage += repositories.nodes?.reduce(
+        (sum: number, repo: any) => sum + repo.diskUsage,
+        0,
+      );
+
+      for (const repo of repositories.nodes) {
+        totalStars += repo.stargazerCount;
+        totalForks += repo.forkCount;
+        mostStarredRepos.push({
+          id: repo.id,
+          name: repo.name,
+          stargazerCount: repo.stargazerCount,
+          forkCount: repo.forkCount,
+        });
+      }
+
+      hasNextPage = repositories.pageInfo.hasNextPage;
+      cursor = repositories.pageInfo.endCursor;
+    }
+
+    mostStarredRepos = mostStarredRepos.sort(
+      (a, b) => b.stargazerCount - a.stargazerCount,
+    );
+
+    mostForkedRepos = mostStarredRepos.sort(
+      (a, b) => b.forkCount - a.forkCount,
+    );
+
+    return {
+      totalRepos,
+      totalStars,
+      totalForks,
+      totalPrMerged,
+      totalDiskUsage,
+      mostStarredRepos: mostStarredRepos.slice(0, 5),
+      mostForkedRepos: mostForkedRepos.slice(0, 5),
+    };
   }
 
   async getContributions(login: string) {

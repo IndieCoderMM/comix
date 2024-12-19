@@ -57,10 +57,39 @@ const shields = {
   },
 } as Record<number, Shield>;
 
+const rankShields = {
+  1: {
+    name: "Master I",
+    color: "#6c63ff",
+    image: "/assets/shields/m-1.svg",
+  },
+  2: {
+    name: "Master II",
+    color: "#ff2b58",
+    image: "/assets/shields/m-2.svg",
+  },
+  3: {
+    name: "Master III",
+    color: "#00c48c",
+    image: "/assets/shields/m-3.svg",
+  },
+} as Record<number, Shield>;
+
 export const getShield = (level: number) => {
   if (level >= 10) {
     return shields[10];
   }
 
   return shields[level];
+};
+
+/**
+ * Exclusive shields for top 3
+ */
+export const getRankShield = (index: number) => {
+  if (index >= 3) {
+    return null;
+  }
+
+  return rankShields[index + 1];
 };

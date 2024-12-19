@@ -42,7 +42,7 @@ const LanguageChart = ({ data }: { data: LanguageData[] }) => {
   }, [chartData]);
 
   return (
-    <Card className="max-w-sm">
+    <Card className="w-full max-w-md">
       <CardTitle className="p-4 text-h6">Most Used Languages</CardTitle>
       <CardContent className="flex gap-4 p-4">
         <div className="grid items-center gap-2">

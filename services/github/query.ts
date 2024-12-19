@@ -1,19 +1,44 @@
 import { gql } from "@apollo/client";
 
+export const GET_BASE_REPO = gql`
+  query ($owner: String!, $name: String!, $after: String) {
+    repository(owner: $owner, name: $name) {
+      id
+      stargazers(first: 100, after: $after) {
+        edges {
+          node {
+            id
+            login
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
 export const GET_REPOS = gql`
-  query ($login: String!) {
+  query ($login: String!, $cursor: String) {
     user(login: $login) {
       repositories(
         isFork: false
         first: 100
+        after: $cursor
         orderBy: { field: STARGAZERS, direction: DESC }
       ) {
-        id
         totalCount
         nodes {
+          name
           stargazerCount
           forkCount
-          name
+          diskUsage
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
 

@@ -15,6 +15,7 @@ import ProfileSkeleton from "../components/skeletons/profile";
 const Profile = () => {
   const { data: profile, isLoading } = trpc.user.getProfile.useQuery();
   const { data: user } = trpc.user.getAuthUser.useQuery();
+  const { data: baseRepo } = trpc.github.getBaseRepo.useQuery();
 
   const { progress, nextLevel, nextLevelContributions } = useMemo(() => {
     const { level, nextLevelContributions } = calculateLevel(user?.exp || 0);
@@ -25,6 +26,16 @@ const Profile = () => {
 
     return { progress, nextLevel: level + 1, nextLevelContributions };
   }, [user]);
+
+  const { isStarGazer } = useMemo(() => {
+    if (!baseRepo || !user) return { isStarGazer: false };
+
+    return {
+      isStarGazer: baseRepo.stargazers.some(
+        (stargazer) => stargazer.login === user.ghLogin,
+      ),
+    };
+  }, [baseRepo, user]);
 
   if (isLoading) {
     return <ProfileSkeleton />;
@@ -51,6 +62,17 @@ const Profile = () => {
           alt={profile.name}
           className="h-24 w-24 rounded-full border-2 border-white object-cover"
         />
+        {isStarGazer && (
+          <div className="absolute bottom-0 right-0">
+            <Image
+              src="/assets/icons/badge.png"
+              width={32}
+              height={32}
+              alt="Star"
+              className="h-[32px] w-[32px] object-contain"
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-1 flex-col">
         <div className="flex flex-col">
@@ -94,13 +116,21 @@ const Profile = () => {
         </div>
         <blockquote className="text-body3">{profile.bio}</blockquote>
       </div>
-      <Image
-        src={shield.image}
-        alt={shield.name}
-        width={100}
-        height={100}
-        className="object-contain"
-      />
+      <div className="flex flex-col items-center">
+        <Image
+          src={shield.image}
+          alt={shield.name}
+          width={100}
+          height={100}
+          className="object-contain"
+        />
+        <span
+          className="-mt-4 font-heading text-h6"
+          style={{ color: shield.color }}
+        >
+          {shield.name}
+        </span>
+      </div>
     </div>
   );
 };

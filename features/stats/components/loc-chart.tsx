@@ -41,7 +41,7 @@ const LocChart = ({ data }: { data: DailyLoc[] }) => {
   }, [data]);
 
   return (
-    <Card className="shadow-none lg:max-w-md">
+    <Card className="shadow-none">
       <CardHeader className="space-y-0 pb-2">
         <CardDescription>Today</CardDescription>
         <CardTitle className="text-4xl tabular-nums">

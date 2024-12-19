@@ -1,6 +1,5 @@
 "use client";
 
-import dayjs from "dayjs";
 import DailyCommit from "../components/daily-commit";
 
 // Daily challenges for github
@@ -31,13 +30,7 @@ const sampleChallenges = [
 
 const DailyChallenges = () => {
   return (
-    <div className="py-4">
-      <div className="flex items-center justify-between">
-        <h2 className="mb-2 font-heading text-h6">Daily Challenges</h2>
-        <span className="font-heading text-h5 text-secondary">
-          {dayjs().format("ddd DD")}
-        </span>
-      </div>
+    <div className="">
       <ul className="grid grid-cols-1 gap-4">
         {sampleChallenges.map((challenge) => {
           if (challenge.type === "commit") {

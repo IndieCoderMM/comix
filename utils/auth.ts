@@ -27,6 +27,11 @@ const authOptions: NextAuthOptions = {
       profile(profile) {
         return getProfileInfo(profile);
       },
+      authorization: {
+        params: {
+          scope: "read:user user:email public_repo",
+        },
+      },
     }),
   ],
   callbacks: {

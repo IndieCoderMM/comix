@@ -25,10 +25,8 @@ const LocGoal = () => {
     return locData;
   }, [data]);
 
-  console.log("Loc data", data);
-
   return (
-    <div className="max-container">
+    <div className="w-full">
       <LocChart data={locData} />
     </div>
   );
