@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
-import { IconStar } from "@tabler/icons-react";
+import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import { useMemo } from "react";
 import toast from "react-hot-toast";
@@ -39,8 +39,8 @@ const StargazerGift = () => {
   }, [baseRepo, user]);
 
   return (
-    <div className="flex w-full items-center gap-4 rounded-lg border p-2">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100">
+    <div className="flex w-full items-center gap-4 rounded-lg border bg-card p-2">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100 dark:bg-dark">
         <Image
           src="/assets/icons/badge.png"
           alt="Stargazer badge"
@@ -75,7 +75,11 @@ const StargazerGift = () => {
           onClick={handleStarRepo}
           disabled={isLoading}
         >
-          <IconStar />
+          {isStargazer ? (
+            <IconStarFilled className="text-amber-500" />
+          ) : (
+            <IconStar />
+          )}
           {isStargazer ? "Starred" : isLoading ? "Starring" : "Star"}
         </Button>
       </div>

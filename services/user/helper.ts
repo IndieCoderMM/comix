@@ -3,7 +3,21 @@ interface UserLevelProgress {
   nextLevelContributions: number;
 }
 
+interface UserMetadata {
+  commitTarget: number;
+  commitUpdated?: string;
+}
+
 const BASE_PTS = 100;
+
+export const parseMetadata = (
+  metadata: Record<string, string>,
+): UserMetadata => {
+  return {
+    commitTarget: parseInt(metadata.commitTarget, 10),
+    commitUpdated: metadata.commitUpdated,
+  };
+};
 
 export const getNextLevelContributions = (level: number): number => {
   let prev = 0;

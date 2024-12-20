@@ -1,5 +1,5 @@
-import { getSession } from "@/utils/auth";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { getApolloClient } from "@/lib/apollo";
+import { ApolloClient } from "@apollo/client";
 import { extractContributions, extractLanguages } from "./helper";
 import { STAR_REPO } from "./mutation";
 import {
@@ -17,20 +17,7 @@ class GithubService {
 
   private async getClient() {
     if (this.client) return this.client;
-
-    console.log("Creating new client...");
-    const session = await getSession();
-    if (!session?.user?.accessToken) {
-      throw new Error("Missing access token");
-    }
-
-    this.client = new ApolloClient({
-      uri: process.env.NEXT_PUBLIC_GITHUB_GQL_API,
-      cache: new InMemoryCache(),
-      headers: {
-        Authorization: `Bearer ${session.user.accessToken}`,
-      },
-    });
+    this.client = getApolloClient();
 
     return this.client;
   }

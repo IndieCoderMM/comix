@@ -1,21 +1,18 @@
-import { connectRedis } from "@/lib/redis";
-
-const LEADERBOARD_KEY = "leaderboard";
-const USER_PREFIX = "user";
+import { connectRedis, getLeaderboardUserKey, KEYS } from "@/lib/redis";
 
 class LeaderboardService {
   async getLeaderboardWithMetadata(limit: number) {
     const client = await connectRedis();
 
     const leaderboard = await client.zRangeWithScores(
-      LEADERBOARD_KEY,
+      KEYS.LEADERBOARD,
       0,
       limit - 1,
       { REV: true },
     );
 
     const userMetadataPromises = leaderboard.map(async (entry) => {
-      const metadata = await client.hGetAll(this._getUserKey(entry.value));
+      const metadata = await client.hGetAll(getLeaderboardUserKey(entry.value));
       return {
         userId: entry.value,
         score: entry.score,
@@ -36,15 +33,11 @@ class LeaderboardService {
 
     const pipeline = client.multi();
 
-    pipeline.zAdd(LEADERBOARD_KEY, [{ score, value: userId }]);
+    pipeline.zAdd(KEYS.LEADERBOARD, [{ score, value: userId }]);
 
-    pipeline.hSet(this._getUserKey(userId), metadata);
+    pipeline.hSet(getLeaderboardUserKey(userId), metadata);
 
     await pipeline.exec();
-  }
-
-  _getUserKey(userId: string) {
-    return `${USER_PREFIX}:${userId}`;
   }
 }
 

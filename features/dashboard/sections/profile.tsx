@@ -5,7 +5,13 @@ import { Progress } from "@/components/ui/progress";
 import { calculateLevel } from "@/services/user/helper";
 import { trpc } from "@/utils/trpc";
 import { getShield } from "@/utils/users/getShield";
-import { IconGitCommit, IconUsers, IconUserUp } from "@tabler/icons-react";
+import {
+  IconBolt,
+  IconGitCommit,
+  IconUserPlus,
+  IconUsers,
+  IconUserUp,
+} from "@tabler/icons-react";
 import { Share } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -106,15 +112,13 @@ const Profile = () => {
               <div className="flex items-center gap-1">
                 <IconUserUp className="h-5 w-5 text-success" />
                 <p className="text-caption">
-                  {nextLevelContributions} more contributions to Level{" "}
-                  {nextLevel}
+                  {nextLevelContributions} more points to Level {nextLevel}
                 </p>
               </div>
             </div>
             <Progress value={progress > 100 ? 100 : progress} />
           </div>
         </div>
-        <blockquote className="text-body3">{profile.bio}</blockquote>
       </div>
       <div className="flex flex-col items-center">
         <Image
@@ -139,6 +143,7 @@ export default Profile;
 
 const ProfileStats = () => {
   const { data: profile, isLoading } = trpc.user.getProfile.useQuery();
+  const { data: user } = trpc.user.getAuthUser.useQuery();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -148,13 +153,19 @@ const ProfileStats = () => {
     <div className="flex items-center gap-2">
       <span className="mx-2 text-gray-500">•</span>
       <div className="flex items-center gap-1">
+        <IconBolt className="h-4 w-4" />
+        <span className="text-body4">{user?.exp}</span>
+        <span className="text-body3">EXP</span>
+      </div>
+      <span className="mx-2 text-gray-500">•</span>
+      <div className="flex items-center gap-1">
         <IconUsers className="h-4 w-4" />
         <span className="text-body4">{profile?.followers}</span>
         <span className="text-body3">Followers</span>
       </div>
       <span className="mx-2 text-gray-500">•</span>
       <div className="flex items-center gap-1">
-        <IconUserUp className="h-4 w-4" />
+        <IconUserPlus className="h-4 w-4" />
         <span className="text-body4">{profile?.following}</span>
         <span className="text-body3">Following</span>
       </div>

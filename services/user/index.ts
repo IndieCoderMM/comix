@@ -4,8 +4,9 @@ import {
   getUserByGhLogin,
   setupNewUser,
 } from "@/db/query/user";
+import { connectRedis, getUserMetadataKey } from "@/lib/redis";
 import { getSession } from "@/utils/auth";
-import { calculateLevel, getTitle } from "./helper";
+import { calculateLevel, getTitle, parseMetadata } from "./helper";
 
 class UserService {
   /**
@@ -34,6 +35,32 @@ class UserService {
     }
 
     return session.user.profile;
+  }
+
+  /**
+   * Get Cached data from redis
+   */
+  async getMetadata(userId: string) {
+    const client = await connectRedis();
+
+    const rawData = await client.hGetAll(getUserMetadataKey(userId));
+    if (Object.keys(rawData).length === 0) {
+      return null;
+    }
+
+    return parseMetadata(rawData);
+  }
+
+  /**
+   * Update user metadata in redis
+   */
+  async updateMetadata(userId: string, metadata: Record<string, string>) {
+    const client = await connectRedis();
+    await client.hSet(getUserMetadataKey(userId), metadata);
+
+    console.log("Metadata updated", metadata);
+
+    return metadata;
   }
 
   async claimCoins(userId: number, coins: number) {

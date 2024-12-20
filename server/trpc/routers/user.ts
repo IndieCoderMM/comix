@@ -11,6 +11,11 @@ export const userRouter = router({
   getProfile: protectedProcedure.query(async ({ ctx }) => {
     return userService.getProfile();
   }),
+  getMetadata: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      return userService.getMetadata(input.userId);
+    }),
   setupNewUser: protectedProcedure
     .input(z.object({ contribution: z.number() }))
     .mutation(async ({ input }) => {
@@ -23,5 +28,14 @@ export const userRouter = router({
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
       return userService.claimCoins(ctx.auth.id, input.coins);
+    }),
+  updateMetadata: protectedProcedure
+    .input(z.object({ userId: z.string(), commitTarget: z.number().min(0) }))
+    .mutation(async ({ input }) => {
+      const metadata = {
+        commitTarget: input.commitTarget.toString(),
+        commitUpdated: new Date().toISOString(),
+      };
+      return userService.updateMetadata(input.userId, metadata);
     }),
 });

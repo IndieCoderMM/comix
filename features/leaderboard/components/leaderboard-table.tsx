@@ -17,17 +17,16 @@ import UserButton from "./user-button";
 
 const LeaderboardTable = () => {
   const [limit] = useState(10);
-  const { data: leaderboard } = trpc.leaderboard.getLeaderboard.useQuery({
-    limit,
-  });
-
-  if (!leaderboard) {
-    return null;
-  }
+  const { data: leaderboard, isLoading } =
+    trpc.leaderboard.getLeaderboard.useQuery({
+      limit,
+    });
 
   return (
     <Table>
-      <TableCaption>Top Committed Users</TableCaption>
+      <TableCaption>
+        {isLoading ? "Loading..." : "Top Committed Users"}
+      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="font-heading text-body4 font-medium">
@@ -45,7 +44,7 @@ const LeaderboardTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {leaderboard.map((user, idx) => (
+        {leaderboard?.map((user, idx) => (
           <TableRow key={user.userId}>
             <TableCell className="text-h5">
               {String(idx + 1).padStart(4, "0")}

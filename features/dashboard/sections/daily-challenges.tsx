@@ -32,18 +32,8 @@ const DailyChallenges = () => {
   return (
     <div className="">
       <ul className="grid grid-cols-1 gap-4">
+        <DailyCommit className="rounded-lg border bg-card px-4 py-4" />
         {sampleChallenges.map((challenge) => {
-          if (challenge.type === "commit") {
-            return (
-              <DailyCommit
-                key={challenge.id}
-                title={challenge.title}
-                description={challenge.description}
-                className="rounded-lg border bg-card px-4 py-4"
-              />
-            );
-          }
-
           return (
             <li
               key={challenge.id}
