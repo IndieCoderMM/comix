@@ -26,11 +26,16 @@ export const setupNewUser = async ({
   return db.update(users).set(data).where(eq(users.id, id));
 };
 
-export const addClaimables = async (id: number, claimables: number) => {
+export const addClaimables = async (
+  id: number,
+  claimables: number,
+  exp: number,
+) => {
   return db
     .update(users)
     .set({
       claimables: sql`${users.claimables} + ${claimables}`,
+      exp: sql`${users.exp} + ${exp}`,
     })
     .where(eq(users.id, id));
 };

@@ -13,8 +13,8 @@ const StargazerGift = () => {
   const { data: baseRepo } = trpc.github.getBaseRepo.useQuery();
   const { mutate: starRepo, isLoading } = trpc.github.starRepo.useMutation({
     onSuccess: () => {
+      utils.github.getBaseRepo.invalidate();
       toast.success("🌟 Thanks for starring our repo!");
-      utils.user.getAuthUser.invalidate();
     },
   });
 
@@ -53,9 +53,9 @@ const StargazerGift = () => {
         <div className="flex flex-1 flex-col">
           <h3 className="font-heading text-body2">Official Stargazer</h3>
           <p className="text-body3">
-            You have received our{" "}
-            <span className="text-success">Official Stargazer Badge</span> for
-            starring our repo.
+            You have received{" "}
+            <span className="text-success">Stargazer Badge</span> for starring
+            our repo.
           </p>
         </div>
       ) : (

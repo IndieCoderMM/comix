@@ -20,7 +20,7 @@ const HomePage = async () => {
         <div className="md:col-span-6 lg:col-span-5">
           <div className="flex items-baseline justify-start gap-1 py-4">
             <h2 className="mb-2 font-heading text-h6">Daily Challenges</h2>
-            <span className="font-heading text-h5 text-secondary">
+            <span className="font-heading text-h6 text-secondary">
               . {dayjs().format("ddd DD")}
             </span>
           </div>

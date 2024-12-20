@@ -5,7 +5,8 @@ interface UserLevelProgress {
 
 interface UserMetadata {
   commitTarget: number;
-  commitUpdated?: string;
+  commitUpdatedAt?: string;
+  rewardClaimedAt?: string;
 }
 
 const BASE_PTS = 100;
@@ -15,7 +16,8 @@ export const parseMetadata = (
 ): UserMetadata => {
   return {
     commitTarget: parseInt(metadata.commitTarget, 10),
-    commitUpdated: metadata.commitUpdated,
+    commitUpdatedAt: metadata.commitUpdatedAt,
+    rewardClaimedAt: metadata.rewardClaimedAt,
   };
 };
 

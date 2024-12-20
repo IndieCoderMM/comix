@@ -21,20 +21,34 @@ export const userRouter = router({
     .mutation(async ({ input }) => {
       return userService.setupNewUser(input.contribution);
     }),
-  claimCoins: protectedProcedure
-    .input(z.object({ coins: z.number() }))
+  addClaimables: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        coins: z.number().min(0),
+        exp: z.number().min(0),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      await userService.addClaimables(input.coins, input.exp);
+      await userService.updateMetadata(input.userId, {
+        rewardClaimedAt: new Date().toISOString(),
+      });
+    }),
+  claimReward: protectedProcedure
+    .input(z.object({ coins: z.number().min(0) }))
     .mutation(async ({ ctx, input }) => {
       if (!ctx.auth.id) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
-      return userService.claimCoins(ctx.auth.id, input.coins);
+      return userService.claimReward(ctx.auth.id, input.coins);
     }),
-  updateMetadata: protectedProcedure
+  updateCommitTarget: protectedProcedure
     .input(z.object({ userId: z.string(), commitTarget: z.number().min(0) }))
     .mutation(async ({ input }) => {
       const metadata = {
         commitTarget: input.commitTarget.toString(),
-        commitUpdated: new Date().toISOString(),
+        commitUpdatedAt: new Date().toISOString(),
       };
       return userService.updateMetadata(input.userId, metadata);
     }),

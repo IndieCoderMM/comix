@@ -40,6 +40,13 @@ export const githubRouter = router({
 
     return { id, stargazers };
   }),
+  getOwnerRepo: protectedProcedure
+    .input(z.object({ owner: z.string(), name: z.string() }))
+    .query(async ({ input }) => {
+      const data = await githubService.getOwnerRepo(input.owner, input.name);
+
+      return data;
+    }),
   getWeeklyLOC: protectedProcedure.query(async ({ ctx }) => {
     const login = ctx.session?.user?.profile.login;
     const calendar = await githubService.getWeeklyLOC(login);

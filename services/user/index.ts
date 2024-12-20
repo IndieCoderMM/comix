@@ -1,4 +1,5 @@
 import {
+  addClaimables,
   claimCoins,
   createUser,
   getUserByGhLogin,
@@ -56,14 +57,26 @@ class UserService {
    */
   async updateMetadata(userId: string, metadata: Record<string, string>) {
     const client = await connectRedis();
-    await client.hSet(getUserMetadataKey(userId), metadata);
+    const prevMetadata = await client.hGetAll(getUserMetadataKey(userId));
+    const updatedMetadata = { ...prevMetadata, ...metadata } as Record<
+      string,
+      string
+    >;
+
+    await client.hSet(getUserMetadataKey(userId), updatedMetadata);
 
     console.log("Metadata updated", metadata);
 
     return metadata;
   }
 
-  async claimCoins(userId: number, coins: number) {
+  async addClaimables(coins: number, exp: number) {
+    const user = await this.getAuthUser();
+
+    await addClaimables(user.id, coins, exp);
+  }
+
+  async claimReward(userId: number, coins: number) {
     const result = await claimCoins(userId, coins);
     console.log("Coins claimed", result);
   }

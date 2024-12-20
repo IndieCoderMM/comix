@@ -1,12 +1,17 @@
 import { getApolloClient } from "@/lib/apollo";
 import { ApolloClient } from "@apollo/client";
-import { extractContributions, extractLanguages } from "./helper";
+import {
+  extractContributions,
+  extractLanguages,
+  extractRepoData,
+} from "./helper";
 import { STAR_REPO } from "./mutation";
 import {
   GET_BASE_REPO,
   GET_COMMITS,
   GET_CONTRIBUTIONS,
   GET_LANGUAGES,
+  GET_OWNER_REPO,
   GET_REPOS,
   GET_UPDATED_REPOS,
   GET_USER_ID,
@@ -353,6 +358,16 @@ class GithubService {
       mostStarredRepos: mostStarredRepos.slice(0, 5),
       mostForkedRepos: mostForkedRepos.slice(0, 5),
     };
+  }
+
+  async getOwnerRepo(login: string, repo: string) {
+    const client = await this.getClient();
+    const { data } = await client.query({
+      query: GET_OWNER_REPO,
+      variables: { login, name: repo },
+    });
+
+    return extractRepoData(data);
   }
 
   async getContributions(login: string) {

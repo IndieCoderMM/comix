@@ -30,22 +30,20 @@ const sampleChallenges = [
 
 const DailyChallenges = () => {
   return (
-    <div className="">
-      <ul className="grid grid-cols-1 gap-4">
-        <DailyCommit className="rounded-lg border bg-card px-4 py-4" />
-        {sampleChallenges.map((challenge) => {
-          return (
-            <li
-              key={challenge.id}
-              className="rounded-lg border bg-card px-4 py-4"
-            >
-              <h3 className="text-body4">{challenge.title}</h3>
-              <p className="text-sm">{challenge.description}</p>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <ul className="grid grid-cols-1 gap-4">
+      <DailyCommit className="rounded-lg border bg-card px-4 py-4" />
+      {sampleChallenges.map((challenge) => {
+        return (
+          <li
+            key={challenge.id}
+            className="rounded-lg border bg-card px-4 py-4"
+          >
+            <h3 className="text-body4">{challenge.title}</h3>
+            <p className="text-sm">{challenge.description}</p>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 

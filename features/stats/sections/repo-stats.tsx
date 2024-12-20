@@ -2,15 +2,14 @@
 
 import { trpc } from "@/utils/trpc";
 import { GitCommit, GitFork, GitPullRequest, Star } from "lucide-react";
+import RepoStatSkeleton from "../components/skeletons/repo-stats";
 import StatCard from "../components/stat-card";
 
 const RepoStats = () => {
-  const { data } = trpc.github.getRepoStats.useQuery();
-
-  console.log(JSON.stringify(data?.mostForkedRepos, null, 2));
+  const { data, isLoading } = trpc.github.getRepoStats.useQuery();
 
   if (!data) {
-    return null;
+    return <RepoStatSkeleton />;
   }
 
   return (

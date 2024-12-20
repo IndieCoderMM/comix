@@ -5,10 +5,12 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 
 const ClaimButton = () => {
+  const utils = trpc.useUtils();
   const { data: user } = trpc.user.getAuthUser.useQuery();
   const { mutate: claimCoins, isLoading: isClaiming } =
-    trpc.user.claimCoins.useMutation({
+    trpc.user.claimReward.useMutation({
       onSuccess(_, variables) {
+        utils.user.getAuthUser.invalidate();
         toast.success(`Claimed ${variables.coins} GitCoins`);
       },
     });
@@ -20,8 +22,7 @@ const ClaimButton = () => {
     claimCoins({ coins: user.claimables });
   };
 
-  // if (!user || !user.claimables || user.claimables === 0) {
-  if (!user) {
+  if (!user || !user.claimables) {
     return null;
   }
 

@@ -62,6 +62,24 @@ export const extractRepoStats = (queryResult: QueryResult): RepoStats => {
   };
 };
 
+export interface RepoData {
+  id: string;
+  name: string;
+  url: string;
+}
+
+export const extractRepoData = (data: any): RepoData => {
+  if (!data?.repository) {
+    throw new Error("Invalid data structure");
+  }
+
+  return {
+    id: data.repository.id as string,
+    name: data.repository.name as string,
+    url: data.repository.url as string,
+  };
+};
+
 export const extractContributions = (
   data: any,
 ): { total: number; data: ContributionData[] } => {

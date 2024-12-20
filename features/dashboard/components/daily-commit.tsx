@@ -18,7 +18,6 @@ import {
   IconEdit,
   IconUserUp,
 } from "@tabler/icons-react";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import DailyCommitSkeleton from "./skeletons/daily-commit";
@@ -41,6 +40,7 @@ const calculateReward = (lines: number) => {
 };
 
 const DailyCommit = ({ className }: { className?: string }) => {
+  const utils = trpc.useUtils();
   const { data: locData } = trpc.github.getTodayLOC.useQuery();
   const { data: user, isLoading: isUserLoading } =
     trpc.user.getAuthUser.useQuery();
@@ -51,15 +51,13 @@ const DailyCommit = ({ className }: { className?: string }) => {
         enabled: !!user?.id,
       },
     );
-  const { mutate: claimCoins, isLoading: isClaiming } =
-    trpc.user.claimCoins.useMutation({
-      onSuccess(_, variables) {
-        toast.success(`Claimed ${variables.coins} GitCoins`);
-      },
-      onError() {
-        toast.error("Cannot claim coins");
-      },
-    });
+  const { mutate: addClaimables } = trpc.user.addClaimables.useMutation({
+    onSuccess(_, variables) {
+      toast.success(`Daily goal committed! (EXP +${variables.exp})`);
+      utils.user.getAuthUser.invalidate();
+      utils.user.getMetadata.invalidate();
+    },
+  });
 
   const { commitTarget, progress, reward } = useMemo(() => {
     if (!locData || !metadata) {
@@ -78,12 +76,22 @@ const DailyCommit = ({ className }: { className?: string }) => {
     return { commitTarget, progress, reward };
   }, [locData, metadata]);
 
-  const handleClaimCoins = () => {
-    if (!user || !reward.coins) {
+  useEffect(() => {
+    if (!user || !metadata || progress <= 100) {
       return;
     }
-    claimCoins({ coins: reward.coins });
-  };
+
+    const alreadyClaimed = metadata.rewardClaimedAt
+      ? new Date(metadata.rewardClaimedAt).getDate() === new Date().getDate()
+      : false;
+    if (!alreadyClaimed) {
+      addClaimables({
+        userId: user.id.toString(),
+        coins: reward.coins,
+        exp: reward.exp,
+      });
+    }
+  }, [progress, metadata, user]);
 
   if (isUserLoading || isMetaLoading) {
     return <DailyCommitSkeleton />;
@@ -93,7 +101,11 @@ const DailyCommit = ({ className }: { className?: string }) => {
     <div className={cn("flex flex-col px-4 py-2", className)}>
       <div className="mb-2 flex items-center justify-between gap-1">
         <div>
-          <h3 className="text-body4">Commit {commitTarget} LOC today</h3>
+          <h3 className="text-body4">
+            {progress >= 100
+              ? `Your daily goal achieved! 🎉`
+              : `Commit ${commitTarget} LOC today`}
+          </h3>
           <p className="text-sm">
             First rule of{" "}
             <span className="font-heading italic text-primary">Commitly</span>{" "}
@@ -127,28 +139,8 @@ const DailyCommit = ({ className }: { className?: string }) => {
               {progress.toFixed(2)}% of {commitTarget}
             </span>
           </div>
-          <Progress value={progress} />
+          <Progress value={progress > 100 ? 100 : progress} />
         </div>
-      </div>
-      <div className="mt-2 flex items-center justify-end">
-        {progress === 100 ? (
-          <Button
-            variant="outline"
-            onClick={handleClaimCoins}
-            disabled={isClaiming}
-            className="ml-auto p-2"
-            size={"lg"}
-          >
-            <Image
-              src="/assets/icons/coin.png"
-              width={20}
-              height={20}
-              alt="Coin"
-              className="object-contain"
-            />
-            {isClaiming ? "Claiming..." : `Claim ${reward.coins} GitCoins`}
-          </Button>
-        ) : null}
       </div>
     </div>
   );
@@ -167,7 +159,7 @@ const EditCommitGoal = () => {
   );
   const utils = trpc.useUtils();
   const { mutate: updateMetadata, isLoading } =
-    trpc.user.updateMetadata.useMutation({
+    trpc.user.updateCommitTarget.useMutation({
       onSuccess() {
         utils.user.getMetadata.invalidate();
         toast.success("Commit goal updated");
@@ -181,11 +173,13 @@ const EditCommitGoal = () => {
     if (metadata?.commitTarget) {
       setCommitTarget(metadata.commitTarget);
     }
-    const alreadyUpdated = metadata?.commitUpdated
-      ? new Date(metadata.commitUpdated).getDate() === new Date().getDate()
+    const alreadyUpdated = metadata?.commitUpdatedAt
+      ? new Date(metadata.commitUpdatedAt).getDate() === new Date().getDate()
       : false;
     setUpdateable(!alreadyUpdated);
   }, [metadata]);
+
+  const reward = calculateReward(commitTarget);
 
   const updateCommitGoal = () => {
     if (!user) {
@@ -202,8 +196,6 @@ const EditCommitGoal = () => {
       commitTarget,
     });
   };
-
-  const reward = calculateReward(commitTarget);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

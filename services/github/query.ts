@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const GET_OWNER_REPO = gql`
+  query ($login: String!, $name: String!) {
+    repository(owner: $login, name: $name) {
+      id
+      name
+      url
+    }
+  }
+`;
+
 export const GET_BASE_REPO = gql`
   query ($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {

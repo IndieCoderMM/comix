@@ -132,10 +132,6 @@ const LocChart = ({ data }: { data: DailyLoc[] }) => {
           <span className="font-medium text-foreground">{totalLines}</span>{" "}
           lines of code.
         </CardDescription>
-        <CardDescription>
-          You need <span className="font-medium text-foreground">12,584</span>{" "}
-          more lines to reach your goal.
-        </CardDescription>
       </CardFooter>
     </Card>
   );
