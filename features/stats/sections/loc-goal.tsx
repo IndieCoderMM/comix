@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import LocChart from "../components/loc-chart";
 
 const LocGoal = () => {
-  const { data } = trpc.github.getWeeklyLOC.useQuery();
+  const { data, isLoading } = trpc.github.getWeeklyLOC.useQuery();
 
   const locData = useMemo(() => {
     if (!data) return [];
@@ -27,7 +27,11 @@ const LocGoal = () => {
 
   return (
     <div className="w-full">
-      <LocChart data={locData} />
+      {isLoading ? (
+        <div className="aspect-square w-full animate-pulse rounded-lg bg-card"></div>
+      ) : (
+        <LocChart data={locData} />
+      )}
     </div>
   );
 };

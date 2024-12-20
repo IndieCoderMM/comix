@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const UpdateLeaderboard = () => {
   const { data: user } = trpc.user.getAuthUser.useQuery();
-  const { mutate: updateLeaderboard } =
+  const { mutate: updateLeaderboard, isSuccess } =
     trpc.leaderboard.addUserToLeaderboard.useMutation({
       onSuccess: () => {
         toast.success("Leaderboard updated");

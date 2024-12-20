@@ -3,7 +3,9 @@ import { ApolloClient } from "@apollo/client";
 import {
   extractContributions,
   extractLanguages,
+  extractPublicRepo,
   extractRepoData,
+  PublicRepo,
 } from "./helper";
 import { STAR_REPO } from "./mutation";
 import {
@@ -12,6 +14,7 @@ import {
   GET_CONTRIBUTIONS,
   GET_LANGUAGES,
   GET_OWNER_REPO,
+  GET_PUBLIC_REPO,
   GET_REPOS,
   GET_UPDATED_REPOS,
   GET_USER_ID,
@@ -358,6 +361,57 @@ class GithubService {
       mostStarredRepos: mostStarredRepos.slice(0, 5),
       mostForkedRepos: mostForkedRepos.slice(0, 5),
     };
+  }
+
+  async getPublicRepoList(
+    repoList: { name: string; owner: string }[],
+    chunkSize: number = 20,
+  ) {
+    const client = await this.getClient();
+
+    const chunkRepoList = (
+      list: { name: string; owner: string }[],
+      size: number,
+    ) => {
+      const chunks: { name: string; owner: string }[][] = [];
+      for (let i = 0; i < list.length; i += size) {
+        chunks.push(list.slice(i, i + size));
+      }
+      return chunks;
+    };
+
+    const repoChunks = chunkRepoList(repoList, chunkSize);
+
+    const allRepos = new Map<string, PublicRepo>();
+
+    for (const chunk of repoChunks) {
+      const promises = chunk.map((repo) =>
+        client
+          .query({
+            query: GET_PUBLIC_REPO,
+            variables: { owner: repo.owner, name: repo.name },
+          })
+          .then((response) => extractPublicRepo(response.data)),
+      );
+
+      const repos = await Promise.all(promises);
+
+      for (const repo of repos) {
+        allRepos.set(repo.nameWithOwner, repo);
+      }
+    }
+
+    return allRepos;
+  }
+
+  async getPublicRepo(owner: string, name: string) {
+    const client = await this.getClient();
+    const { data } = await client.query({
+      query: GET_PUBLIC_REPO,
+      variables: { owner, name },
+    });
+
+    return extractPublicRepo(data);
   }
 
   async getOwnerRepo(login: string, repo: string) {

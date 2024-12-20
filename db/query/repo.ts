@@ -82,17 +82,6 @@ export const boostRepoById = async (
       throw new Error("Not enough coins");
     }
 
-    const [repo] = await trx
-      .select()
-      .from(repos)
-      .where(eq(repos.id, repoId))
-      .limit(1);
-
-    if (!repo) {
-      trx.rollback();
-      throw new Error("Repo not found");
-    }
-
     // TODO: Refine this formula
     const expGained = Math.round(boost * BOOST_EXP_FACTOR);
 
@@ -103,9 +92,11 @@ export const boostRepoById = async (
         exp: sql`${users.exp} + ${expGained}`,
       })
       .where(eq(users.id, userId));
+
     return await trx
       .update(repos)
       .set({ boost: sql`${repos.boost} + ${boost}` })
+      .where(eq(repos.id, repoId))
       .returning();
   });
 };

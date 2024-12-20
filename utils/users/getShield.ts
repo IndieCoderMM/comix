@@ -61,7 +61,7 @@ const rankShields = {
   1: {
     name: "Master I",
     color: "#6c63ff",
-    image: "/assets/shields/m-1.svg",
+    image: "/assets/shields/m-3.svg",
   },
   2: {
     name: "Master II",
@@ -71,7 +71,7 @@ const rankShields = {
   3: {
     name: "Master III",
     color: "#00c48c",
-    image: "/assets/shields/m-3.svg",
+    image: "/assets/shields/m-1.svg",
   },
 } as Record<number, Shield>;
 

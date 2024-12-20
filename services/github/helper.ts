@@ -80,6 +80,45 @@ export const extractRepoData = (data: any): RepoData => {
   };
 };
 
+export interface PublicRepo {
+  id: string;
+  name: string;
+  owner: string;
+  url: string;
+  nameWithOwner: string;
+  description: string | null;
+  createdAt: string;
+  stargazerCount: number;
+  forkCount: number;
+  openIssues: {
+    totalCount: number;
+  };
+}
+
+export const extractPublicRepo = (data: any): PublicRepo => {
+  const repo = data?.repository;
+  if (!repo) {
+    throw new Error("Invalid data structure");
+  }
+
+  const extractedData: PublicRepo = {
+    id: repo.id,
+    name: repo.name,
+    owner: repo.owner.login,
+    nameWithOwner: repo.nameWithOwner,
+    url: repo.url,
+    description: repo.description,
+    createdAt: repo.createdAt,
+    stargazerCount: repo.stargazerCount,
+    forkCount: repo.forkCount,
+    openIssues: {
+      totalCount: repo.openIssues.totalCount,
+    },
+  };
+
+  return extractedData;
+};
+
 export const extractContributions = (
   data: any,
 ): { total: number; data: ContributionData[] } => {

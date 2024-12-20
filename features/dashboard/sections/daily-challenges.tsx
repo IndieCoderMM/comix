@@ -9,22 +9,21 @@ import DailyCommit from "../components/daily-commit";
 const sampleChallenges = [
   {
     id: 1,
-    type: "commit",
-    title: "Commit 100 LOC today",
-    description: "First rule of GitClub is you always write those code",
+    type: "post",
+    title: "Share your project",
+    description: "Share your project with the community",
   },
   {
     id: 2,
     type: "explore",
     title: "Explore community posts",
-    description: "Feed your head with freshing new ideas",
+    description: "Explore and interact with community posts",
   },
   {
     id: 3,
     type: "contribute",
-    title: "Contribute to the community",
-    description:
-      "Give something back by sharing/interacting with the community",
+    title: "Contribute to a project",
+    description: "Contribute to an open source project",
   },
 ];
 
@@ -36,10 +35,14 @@ const DailyChallenges = () => {
         return (
           <li
             key={challenge.id}
-            className="rounded-lg border bg-card px-4 py-4"
+            className="relative rounded-lg border bg-card px-4 py-4"
           >
             <h3 className="text-body4">{challenge.title}</h3>
             <p className="text-sm">{challenge.description}</p>
+
+            <div className="absolute right-2 top-2 rounded-full bg-success/50 px-2">
+              <span className="text-xs uppercase text-white">Soon</span>
+            </div>
           </li>
         );
       })}

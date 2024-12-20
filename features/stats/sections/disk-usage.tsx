@@ -13,11 +13,17 @@ import { ChartContainer } from "@/components/ui/chart";
 import { trpc } from "@/utils/trpc";
 
 const DiskUsage = () => {
-  const { data } = trpc.github.getRepoStats.useQuery();
+  const { data, isLoading } = trpc.github.getRepoStats.useQuery();
 
   const formatMB = (kb: number) => {
     return (kb / 1024).toFixed(2);
   };
+
+  if (isLoading) {
+    return (
+      <div className="aspect-video w-full animate-pulse rounded-lg bg-card" />
+    );
+  }
 
   return (
     <Card className="max-w-xs">

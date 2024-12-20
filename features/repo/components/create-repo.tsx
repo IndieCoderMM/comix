@@ -17,9 +17,9 @@ const CreateRepo = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size={"lg"}>
+        <Button variant="outline" size={"xl"}>
           <IconPlus />
-          Upload Repo
+          <span className="ml-2 font-heading">Upload Repo</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
