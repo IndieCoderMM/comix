@@ -11,7 +11,7 @@ const Footer = () => {
             />
 
             <p className="mt-5 text-sm text-white xl:ml-6 xl:mt-0">
-              © Copyright 2021 Postcraft
+              © Copyright 2024 Commitly
             </p>
           </div>
 

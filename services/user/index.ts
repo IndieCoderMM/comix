@@ -3,6 +3,7 @@ import {
   claimCoins,
   createUser,
   getUserByGhLogin,
+  markedAsOnboarded,
   setupNewUser,
 } from "@/db/query/user";
 import { connectRedis, getUserMetadataKey } from "@/lib/redis";
@@ -74,6 +75,11 @@ class UserService {
     const user = await this.getAuthUser();
 
     await addClaimables(user.id, coins, exp);
+  }
+
+  async markAsOnboarded(userId: number) {
+    const result = await markedAsOnboarded(userId);
+    console.log("User onboarded", result);
   }
 
   async claimReward(userId: number, coins: number) {

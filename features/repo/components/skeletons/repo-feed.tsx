@@ -14,7 +14,7 @@ const RepoFeedSkeleton = () => {
       </div>
       <div className="mt-4 flex items-center gap-4">
         <div className="h-6 w-1/4 rounded bg-gray-300"></div>
-        <div className="h-6 w-1/4 rounded bg-gray-300"></div>
+        <div className="h-s w-1/4 rounded bg-gray-300"></div>
         <div className="h-6 w-1/4 rounded bg-gray-300"></div>
         <div className="h-6 w-1/4 rounded bg-gray-300"></div>
       </div>

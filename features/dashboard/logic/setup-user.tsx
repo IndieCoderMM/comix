@@ -3,11 +3,16 @@ import { trpc } from "@/utils/trpc";
 import { useEffect } from "react";
 
 const SetupUser = () => {
+  const utils = trpc.useUtils();
   const { data: contribData, isLoading } =
     trpc.github.getContributions.useQuery();
   const { data: user } = trpc.user.getAuthUser.useQuery();
   const { mutate: setupNewUser, isLoading: isSettingUp } =
-    trpc.user.setupNewUser.useMutation();
+    trpc.user.setupNewUser.useMutation({
+      onSuccess() {
+        utils.user.getAuthUser.invalidate();
+      },
+    });
 
   useEffect(() => {
     if (!user) return;

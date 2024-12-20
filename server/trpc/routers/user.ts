@@ -35,6 +35,11 @@ export const userRouter = router({
         rewardClaimedAt: new Date().toISOString(),
       });
     }),
+  markAsOnboarded: protectedProcedure
+    .input(z.object({ userId: z.number() }))
+    .mutation(async ({ input }) => {
+      return userService.markAsOnboarded(input.userId);
+    }),
   claimReward: protectedProcedure
     .input(z.object({ coins: z.number().min(0) }))
     .mutation(async ({ ctx, input }) => {

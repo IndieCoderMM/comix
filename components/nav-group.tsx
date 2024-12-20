@@ -1,7 +1,5 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -19,8 +17,9 @@ const NavGroup = ({
   items: {
     title: string;
     url: string;
-    icon?: LucideIcon;
+    icon?: any;
     isActive?: boolean;
+    isExternal?: boolean;
   }[];
 }) => {
   return (
@@ -29,7 +28,10 @@ const NavGroup = ({
       <SidebarMenu className="gap-2">
         {items.map((item) => (
           <SidebarMenuItem key={item.url}>
-            <Link href={item.url}>
+            <Link
+              href={item.url}
+              target={item.isExternal ? "_blank" : undefined}
+            >
               <SidebarMenuButton tooltip={item.title} size="lg">
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>

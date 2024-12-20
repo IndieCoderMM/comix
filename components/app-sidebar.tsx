@@ -12,6 +12,7 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
+import { IconBrandGithub, IconMessage } from "@tabler/icons-react";
 
 // This is sample data.
 const data = {
@@ -39,6 +40,20 @@ const data = {
       icon: HashIcon,
     },
   ],
+  project: [
+    {
+      title: "GitHub",
+      url: "https://github.com/IndieCoderMM/commitly",
+      icon: IconBrandGithub,
+      isExternal: true,
+    },
+    {
+      title: "Feature Request",
+      url: "https://github.com/IndieCoderMM/commitly/issues",
+      icon: IconMessage,
+      isExternal: true,
+    },
+  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -51,6 +66,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavGroup title={"Platform"} items={data.navMain} />
         <SidebarSeparator />
         <NavGroup title={"Community"} items={data.community} />
+        <SidebarSeparator />
+        <NavGroup title={"This Project"} items={data.project} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

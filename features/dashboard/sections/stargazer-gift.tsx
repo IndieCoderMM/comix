@@ -51,7 +51,9 @@ const StargazerGift = () => {
       </div>
       {isStargazer ? (
         <div className="flex flex-1 flex-col">
-          <h3 className="font-heading text-body2">Official Stargazer</h3>
+          <h3 className="font-heading text-body2 text-purple-gray dark:text-neutral-300">
+            Official Stargazer
+          </h3>
           <p className="text-body3">
             You have received{" "}
             <span className="text-success">Stargazer Badge</span> for starring
@@ -69,12 +71,7 @@ const StargazerGift = () => {
         </div>
       )}
       <div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleStarRepo}
-          disabled={isLoading}
-        >
+        <Button variant="outline" onClick={handleStarRepo} disabled={isLoading}>
           {isStargazer ? (
             <IconStarFilled className="text-amber-500" />
           ) : (

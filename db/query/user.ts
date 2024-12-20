@@ -40,6 +40,13 @@ export const addClaimables = async (
     .where(eq(users.id, id));
 };
 
+export const markedAsOnboarded = async (id: number) => {
+  return db
+    .update(users)
+    .set({ signUpRewardClaimed: false })
+    .where(eq(users.id, id));
+};
+
 export const claimCoins = async (id: number, coins: number) => {
   return db.transaction(async (trx) => {
     const [{ claimables }] = await trx
