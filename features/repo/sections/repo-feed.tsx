@@ -17,8 +17,6 @@ const RepoFeed = () => {
       return null;
     }
 
-    console.log(publicRepoData);
-
     return repos.map((repo) => {
       const nameWithOwner = `${repo.owner}/${repo.name}`;
       const publicData = publicRepoData?.get(nameWithOwner);
@@ -37,7 +35,7 @@ const RepoFeed = () => {
         {isLoading ? <RepoFeedSkeleton /> : renderRepoList}
       </div>
       <div className="order-first col-span-12 md:order-last md:col-span-4">
-        <Card className="sticky top-10">
+        <Card className="top-10 sm:sticky">
           <CardHeader>
             <CardTitle className="font-heading text-h5 text-neutral-800 dark:text-neutral-200">
               Repositories & Boosting
@@ -45,7 +43,7 @@ const RepoFeed = () => {
           </CardHeader>
           <CardContent className="flex flex-col gap-4 text-neutral-800 dark:text-neutral-200">
             <div className="flex items-start gap-2">
-              <div className="size-10 p-2">
+              <div className="size-7 p-2 sm:size-10">
                 <IconShare />
               </div>
               <p className="text-base">
@@ -54,7 +52,7 @@ const RepoFeed = () => {
               </p>
             </div>
             <div className="flex items-start gap-2">
-              <div className="size-10 p-2">
+              <div className="size-7 p-2 sm:size-10">
                 <IconBolt />
               </div>
               <p className="text-base">
@@ -63,7 +61,7 @@ const RepoFeed = () => {
               </p>
             </div>
             <div className="flex items-start gap-2">
-              <div className="size-10 p-2">
+              <div className="size-7 p-2 sm:size-10">
                 <IconCodePlus />
               </div>
               <p className="text-base">

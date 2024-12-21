@@ -24,7 +24,9 @@ const CreateRepo = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Upload Your Repo</DialogTitle>
+          <DialogTitle className="text-center font-heading text-h5">
+            Upload Your Repo
+          </DialogTitle>
         </DialogHeader>
         <RepoForm onSuccess={() => setOpen(false)} />
       </DialogContent>

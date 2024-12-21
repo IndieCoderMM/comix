@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -25,20 +24,20 @@ const LeaderboardTable = () => {
   return (
     <Table>
       <TableCaption>
-        {isLoading ? "Loading..." : "Top Committed Users"}
+        {isLoading ? "Loading..." : "Top Committers Leaderboard"}
       </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="font-heading text-body4 font-medium">
             Rank
           </TableHead>
-          <TableHead className="font-heading text-body4 font-medium">
+          <TableHead className="flex-1 font-heading text-body4 font-medium">
             User
           </TableHead>
           <TableHead className="text-center font-heading text-body4 font-medium">
             Level
           </TableHead>
-          <TableHead className="w-[200px] text-center font-heading text-body4 font-medium">
+          <TableHead className="text-center font-heading text-body4 font-medium sm:w-[200px]">
             Exp
           </TableHead>
         </TableRow>
@@ -46,21 +45,18 @@ const LeaderboardTable = () => {
       <TableBody>
         {leaderboard?.map((user, idx) => (
           <TableRow key={user.userId}>
-            <TableCell className="text-h5">
+            <TableCell className="sm:text-h5">
               {String(idx + 1).padStart(4, "0")}
             </TableCell>
-            <TableCell className="flex items-center">
+            <TableCell className="flex flex-1 items-center">
               <UserButton user={user} />
               <RankBadge index={idx} />
             </TableCell>
-            <TableCell className="text-center text-h5">
+            <TableCell className="text-center sm:text-h5">
               {user.metadata.level}
             </TableCell>
-            <TableCell className="text-center text-h5">{user.score}</TableCell>
-            <TableCell className="text-center text-h5">
-              <Button variant="outline" onClick={() => console.log("clicked")}>
-                View Profile
-              </Button>
+            <TableCell className="text-center sm:text-h5">
+              {user.score}
             </TableCell>
           </TableRow>
         ))}

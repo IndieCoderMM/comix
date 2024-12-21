@@ -12,12 +12,7 @@ import { Progress } from "@/components/ui/progress";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/utils/tailwind";
 import { trpc } from "@/utils/trpc";
-import {
-  IconArrowBigUpLines,
-  IconCoin,
-  IconEdit,
-  IconUserUp,
-} from "@tabler/icons-react";
+import { IconArrowBigUpLines, IconCoin, IconEdit } from "@tabler/icons-react";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import DailyCommitSkeleton from "./skeletons/daily-commit";
@@ -108,8 +103,8 @@ const DailyCommit = ({ className }: { className?: string }) => {
           </h3>
           <p className="text-sm">
             First rule of{" "}
-            <span className="font-heading italic text-primary">Commitly</span>{" "}
-            is you always commit those code
+            <span className="font-heading italic text-primary">Comix</span> is
+            you always commit those code
           </p>
         </div>
         <EditCommitGoal />
@@ -215,7 +210,7 @@ const EditCommitGoal = () => {
             <span>{reward.coins} GitCoins</span>
           </div>
           <div className="flex items-center gap-1">
-            <IconUserUp className="text-success" />
+            <IconArrowBigUpLines className="text-success" />
             <span className="text-caption">+{reward.exp} EXP</span>
           </div>
         </div>

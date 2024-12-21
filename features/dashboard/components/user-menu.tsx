@@ -9,8 +9,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconBrandGithub, IconUser } from "@tabler/icons-react";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 interface MenuItem {
@@ -29,30 +28,8 @@ const menuItems: MenuItem[] = [
     group: "Account",
     items: [
       {
-        icon: IconUser,
-        label: "Profile",
-        shortcut: "⇧⌘P",
-        onClick: () => console.log("Profile clicked"),
-      },
-      {
-        icon: Settings,
-        label: "Settings",
-        shortcut: "⌘S",
-        onClick: () => console.log("Settings clicked"),
-      },
-      {
-        icon: IconBrandGithub,
-        label: "GitHub",
-        onClick: () => console.log("GitHub clicked"),
-      },
-    ],
-  },
-  {
-    items: [
-      {
         icon: LogOut,
         label: "Log out",
-        shortcut: "⇧⌘Q",
         onClick: () => {
           signOut({
             callbackUrl: "/",

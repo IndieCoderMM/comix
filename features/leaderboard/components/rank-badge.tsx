@@ -12,9 +12,9 @@ const RankBadge = ({ index }: { index: number }) => {
       <Image
         src={shield.image}
         alt={shield.name}
-        width={50}
-        height={50}
-        className="object-contain"
+        width={80}
+        height={80}
+        className="h-8 w-8 object-contain sm:h-20 sm:w-20"
       />
     </div>
   );

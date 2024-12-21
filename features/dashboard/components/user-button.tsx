@@ -45,7 +45,7 @@ const UserButton = () => {
             <span className="text-body4 text-amber-500">{user.coins}</span>
           </div>
         </div>
-        <div className="flex items-center">
+        <div className="hidden items-center sm:flex">
           <Image
             src={shield.image}
             alt={shield.name}

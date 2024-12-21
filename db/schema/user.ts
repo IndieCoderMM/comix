@@ -21,7 +21,7 @@ export const users = pgTable(
     image: text("image").notNull(),
     coins: integer("coins").default(0),
     claimables: integer("claimables").default(0),
-    signUpRewardClaimed: boolean("sign_up_reward_claimed").default(false),
+    signUpRewardClaimed: boolean("sign_up_reward_claimed").default(false), // TODO: Rename to isOnboarded
     level: integer("level").default(1),
     exp: integer("exp").default(0),
     title: varchar("title", { length: 100 }).default("Beginner"),

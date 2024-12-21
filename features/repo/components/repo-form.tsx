@@ -38,6 +38,7 @@ const RepoForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const { mutate, isLoading } = trpc.repo.createRepo.useMutation({
     onSuccess() {
       utils.repo.getAllRepos.invalidate();
+      utils.repo.getPublicRepos.invalidate();
       utils.user.getAuthUser.invalidate();
       toast.success("Repo added successfully");
       onSuccess();

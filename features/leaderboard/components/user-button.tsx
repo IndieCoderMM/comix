@@ -12,10 +12,10 @@ const UserButton = ({
         alt={user.metadata.name}
         width={50}
         height={50}
-        className="rounded-full"
+        className="hidden rounded-full sm:block"
       />
       <div>
-        <p className="font-heading text-h6 text-primary">
+        <p className="font-heading text-primary sm:text-h6">
           {user.metadata.name}
         </p>
       </div>

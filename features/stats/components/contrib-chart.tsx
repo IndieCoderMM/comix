@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/chart";
 import { useMemo, useState } from "react";
 
-export const description = "An interactive bar chart";
+export const description = "Contributions in last year";
 
 const chartConfig = {
   contributionCount: {
@@ -32,54 +32,30 @@ const ContribChart = ({
   data: { date: string; contributionCount: number }[];
   total: number;
 }) => {
-  const [activeYear, setActiveYear] = useState("2024");
-  const [activeMonthRange, setActiveMonthRange] = useState(3); // Number of months to display
-
-  const years = useMemo(() => {
-    const years = data.map((item) => item.date.slice(0, 4));
-    return Array.from(new Set(years));
-  }, [data]);
+  const [activeYear] = useState("2024");
 
   const chartData = useMemo(() => {
     const filteredData = data.filter((item) => {
       const itemDate = new Date(item.date);
       const year = itemDate.getFullYear();
 
-      if (year !== Number(activeYear)) {
-        return false;
-      }
-
-      const month = itemDate.getMonth();
-      const currentMonth = new Date().getMonth();
-
-      return month >= currentMonth - activeMonthRange;
+      return year === Number(activeYear);
     });
 
     return filteredData;
-  }, [data, activeYear, activeMonthRange]);
+  }, [data, activeYear]);
 
   return (
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Total Contributions {total}</CardTitle>
-          <CardDescription>
-            Visual representation of your contributions
-          </CardDescription>
+          <CardDescription>Your Contribution in last year</CardDescription>
         </div>
         <div className="flex">
-          {years.map((y) => {
-            return (
-              <button
-                key={y}
-                data-active={activeYear === y}
-                className="flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-                onClick={() => setActiveYear(y)}
-              >
-                <span className="text-xs text-muted-foreground">{y}</span>
-              </button>
-            );
-          })}
+          <div className="flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
+            <span className="text-xs text-muted-foreground">{activeYear}</span>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">

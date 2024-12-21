@@ -1,7 +1,7 @@
 import LogoutButton from "@/components/shared/logout-button";
 import SigninButton from "@/components/shared/signin-button";
 import { getSession } from "@/utils/auth";
-import { IconMenu2 } from "@tabler/icons-react";
+import Image from "next/image";
 
 const Header = async () => {
   const session = await getSession();
@@ -9,18 +9,18 @@ const Header = async () => {
     <header className="max-container bg-[#FCF8F1] bg-opacity-30">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
-          <div className="flex-shrink-0">
-            <a href="#" title="" className="font-heading text-h5">
-              Commitly
+          <div className="flex flex-shrink-0 items-center">
+            <Image
+              src="/assets/logo.png"
+              width={40}
+              height={40}
+              alt="Comix"
+              className="object-contain"
+            />
+            <a href="#" title="" className="font-heading text-h5 text-primary">
+              Comix
             </a>
           </div>
-          <button
-            type="button"
-            className="inline-flex rounded-md p-2 text-black transition-all duration-200 hover:bg-gray-100 focus:bg-gray-100 lg:hidden"
-          >
-            <IconMenu2 />
-          </button>
-          <NavLinks />
           {session ? (
             <LogoutButton text="Logout" />
           ) : (

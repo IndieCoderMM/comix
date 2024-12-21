@@ -6,11 +6,11 @@ import { calculateLevel } from "@/services/user/helper";
 import { trpc } from "@/utils/trpc";
 import { getShield } from "@/utils/users/getShield";
 import {
+  IconArrowBigUpLines,
   IconBolt,
   IconGitCommit,
   IconUserPlus,
   IconUsers,
-  IconUserUp,
 } from "@tabler/icons-react";
 import { Share } from "lucide-react";
 import Image from "next/image";
@@ -51,12 +51,12 @@ const Profile = () => {
     return null;
   }
 
-  const shield = getShield(user?.level || 0);
+  const shield = getShield(user?.level || 1);
 
   return (
-    <div className="max-container flex items-center gap-4 rounded-lg border bg-card p-4 lg:px-10 lg:py-8">
+    <div className="max-container flex flex-col items-center gap-4 rounded-lg border bg-card p-4 sm:flex-row lg:px-10 lg:py-8">
       <div
-        className="relative rounded-full p-1"
+        className="relative flex-shrink-0 self-start rounded-full p-1"
         style={{
           backgroundColor: shield.color,
         }}
@@ -87,7 +87,7 @@ const Profile = () => {
               {profile.name}
             </h1>
           </div>
-          <div className="flex items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center">
             <Link
               href={`https://github.com/${profile.login}`}
               target="_blank"
@@ -96,7 +96,8 @@ const Profile = () => {
               @{profile.login}
             </Link>
             <ProfileStats />
-            <Button size="sm" variant="outline" className="ml-auto">
+            {/* //TODO: Profile share feature */}
+            <Button size="sm" variant="outline" className="ml-auto hidden">
               <Share />
               Share
             </Button>
@@ -109,8 +110,8 @@ const Profile = () => {
                   Level: {user?.level} ({user?.title})
                 </span>
               </div>
-              <div className="flex items-center gap-1">
-                <IconUserUp className="h-5 w-5 text-success" />
+              <div className="hidden items-center gap-1 sm:flex">
+                <IconArrowBigUpLines className="h-5 w-5 text-success" />
                 <p className="text-caption">
                   {nextLevelContributions} more points to Level {nextLevel}
                 </p>
@@ -150,8 +151,8 @@ const ProfileStats = () => {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="mx-2 text-gray-500">•</span>
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="mx-2 hidden text-gray-500 sm:block">•</span>
       <div className="flex items-center gap-1">
         <IconBolt className="h-4 w-4" />
         <span className="text-body4">{user?.exp}</span>

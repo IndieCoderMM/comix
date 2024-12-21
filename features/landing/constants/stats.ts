@@ -8,7 +8,7 @@ import { Stat } from "../types";
 export const StatsData: Stat[] = [
   {
     title: "Active Users",
-    value: "1,200+",
+    value: "15,400+",
     icon: IconUsersPlus,
     fg: "text-[#c06ef3]",
     bg: "bg-[#c06ef3]/10",

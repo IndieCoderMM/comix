@@ -7,6 +7,13 @@ import Profile from "@/features/dashboard/sections/profile";
 import StargazerGift from "@/features/dashboard/sections/stargazer-gift";
 import { getSession } from "@/utils/auth";
 import dayjs from "dayjs";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard - Comix",
+  description:
+    "Personalized dashboard to track progress, view rewards, and monitor your coding achievements",
+};
 
 const HomePage = async () => {
   const session = await getSession();
@@ -16,10 +23,10 @@ const HomePage = async () => {
   }
 
   return (
-    <main className="w-full">
+    <main className="w-full px-2">
       <Profile />
       <section className="max-container grid grid-cols-12 pb-20 lg:pb-28">
-        <div className="md:col-span-6 lg:col-span-5">
+        <div className="col-span-12 md:col-span-6 lg:col-span-5">
           <div className="flex items-baseline justify-start gap-1 py-4">
             <h2 className="mb-2 font-heading text-h6">Daily Challenges</h2>
             <span className="font-heading text-h6 text-secondary">
@@ -28,7 +35,7 @@ const HomePage = async () => {
           </div>
           <DailyChallenges />
         </div>
-        <div className="pl-4 md:col-span-6 lg:col-span-7">
+        <div className="col-span-12 sm:pl-4 md:col-span-6 lg:col-span-7">
           <div className="flex items-baseline justify-start gap-1 py-4">
             <h2 className="mb-2 font-heading text-h6">Activities</h2>
           </div>

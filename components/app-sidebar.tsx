@@ -43,13 +43,13 @@ const data = {
   project: [
     {
       title: "GitHub",
-      url: "https://github.com/IndieCoderMM/commitly",
+      url: "https://github.com/IndieCoderMM/comix",
       icon: IconBrandGithub,
       isExternal: true,
     },
     {
       title: "Feature Request",
-      url: "https://github.com/IndieCoderMM/commitly/issues",
+      url: "https://github.com/IndieCoderMM/comix/issues",
       icon: IconMessage,
       isExternal: true,
     },

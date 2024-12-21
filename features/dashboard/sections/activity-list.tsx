@@ -47,7 +47,7 @@ const LinkItem = ({
   linkLabel: string;
 }) => {
   return (
-    <div className="flex w-full items-center gap-4 rounded-lg border bg-card p-2">
+    <div className="flex w-full flex-col gap-4 rounded-lg border bg-card p-2 sm:flex-row sm:items-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100 dark:bg-dark">
         {icon}
       </div>

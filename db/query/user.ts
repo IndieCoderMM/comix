@@ -43,7 +43,7 @@ export const addClaimables = async (
 export const markedAsOnboarded = async (id: number) => {
   return db
     .update(users)
-    .set({ signUpRewardClaimed: false })
+    .set({ signUpRewardClaimed: true })
     .where(eq(users.id, id));
 };
 

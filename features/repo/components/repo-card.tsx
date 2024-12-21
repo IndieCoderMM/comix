@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { PublicRepo } from "@/services/github/helper";
+import { formatLargeNumber } from "@/utils/format-number";
 import { trpc } from "@/utils/trpc";
 import {
   IconBolt,
@@ -35,8 +36,8 @@ const RepoCard = ({
   } = publicData;
 
   return (
-    <div className="rounded-lg border bg-card p-4">
-      <div className="flex gap-2">
+    <div className="rounded-lg border bg-card p-1 sm:p-4">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <div className="flex flex-1 flex-col">
           <div className="flex items-center gap-1">
             <Link
@@ -57,11 +58,11 @@ const RepoCard = ({
               <span className="text-primary">{name}</span>
             </Link>
           </div>
-          <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-200">
+          <p className="mt-2 hidden text-sm text-neutral-700 dark:text-neutral-200 sm:inline-flex">
             {description || "No description available"}
           </p>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-start sm:items-end">
           <Booster repo={repo} />
         </div>
       </div>
@@ -69,7 +70,7 @@ const RepoCard = ({
         <Stat
           label="Booster"
           icon={<IconBolt className="size-5" />}
-          value={repo.boost ?? 0}
+          value={repo.boost ? formatLargeNumber(repo.boost) : 0}
         />
         <Stat
           label="Stars"
@@ -140,7 +141,7 @@ const Stat = ({
 }: {
   label: string;
   icon: any;
-  value: number;
+  value: number | string;
 }) => {
   return (
     <TooltipProvider>

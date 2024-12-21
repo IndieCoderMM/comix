@@ -16,8 +16,9 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Commitly - The best GitHub commit tracker",
-  description: "Commitly is the best GitHub commit tracker",
+  title: "Comix - Fun way to grow your coding fskills",
+  description:
+    "Comix is a platform that helps you to grow your skills by making coding fun and rewarding.",
 };
 
 export default async function RootLayout({

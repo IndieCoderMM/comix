@@ -5,10 +5,15 @@ import { StatsData } from "../constants/stats";
 
 const Stats = () => {
   return (
-    <div className="max-container flex items-center justify-around">
-      {StatsData.map((stat, index) => (
-        <StatItem key={index} {...stat} />
-      ))}
+    <div className="max-container flex flex-col items-center gap-8 px-8">
+      <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-around">
+        {StatsData.map((stat, index) => (
+          <StatItem key={index} {...stat} />
+        ))}
+      </div>
+      <p className="text-center text-body1 text-mid-gray">
+        These are just random numbers. Enjoy the real experience yourself.
+      </p>
     </div>
   );
 };
@@ -29,7 +34,7 @@ const StatItem = ({
   bg?: string;
 }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex w-full items-center justify-start sm:justify-center">
       <div
         className={cn(
           `flex h-24 w-24 items-center justify-center rounded-xl`,

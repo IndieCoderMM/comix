@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 
 const IntroDialog = () => {
   const utils = trpc.useUtils();
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState<"idle" | "shown" | "showing">("idle");
   const { data: user } = trpc.user.getAuthUser.useQuery();
   const { mutate: markOnboarded, isLoading } =
     trpc.user.markAsOnboarded.useMutation({
@@ -23,15 +25,23 @@ const IntroDialog = () => {
         utils.user.getAuthUser.invalidate();
       },
     });
-  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (status === "showing" && user) {
+      markOnboarded({ userId: user.id });
+      setStatus("shown");
+    }
+  }, [status, user]);
 
   useEffect(() => {
     if (!user) return;
     if (!user.exp || user.exp < 0) return;
 
-    if (!user.signUpRewardClaimed) {
+    if (!user.signUpRewardClaimed && status === "idle") {
       setOpen(true);
-      markOnboarded({ userId: user.id });
+      setStatus("showing");
+    } else {
+      setStatus("shown");
     }
   }, [user]);
 

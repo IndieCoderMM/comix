@@ -5,7 +5,7 @@ import { router } from "../trpc";
 
 const BASE_REPO = {
   owner: "IndieCoderMM",
-  name: "commitly",
+  name: "comix",
 };
 
 export const githubRouter = router({
