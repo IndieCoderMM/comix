@@ -272,9 +272,11 @@ class GithubService {
       const commits = data.repository.defaultBranchRef.target.history
         .edges as any;
 
+      console.log("Commits:", commits);
+
       for (const commit of commits) {
         const { node } = commit;
-        if (!node || node.committer.user.id !== userId) {
+        if (!node || node?.committer?.user?.id !== userId) {
           continue;
         }
 
