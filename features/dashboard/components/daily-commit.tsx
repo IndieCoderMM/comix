@@ -55,7 +55,7 @@ const DailyCommit = ({ className }: { className?: string }) => {
   });
 
   const { commitTarget, progress, reward } = useMemo(() => {
-    if (!locData || !metadata) {
+    if (!locData) {
       return {
         commitTarget: DEFAULT_TARGET,
         progress: 0,
@@ -72,7 +72,7 @@ const DailyCommit = ({ className }: { className?: string }) => {
   }, [locData, metadata]);
 
   useEffect(() => {
-    if (!user || !metadata || progress <= 100) {
+    if (!user || !metadata || progress < 100) {
       return;
     }
 
@@ -134,7 +134,7 @@ const DailyCommit = ({ className }: { className?: string }) => {
               {progress.toFixed(2)}% of {commitTarget}
             </span>
           </div>
-          <Progress value={progress > 100 ? 100 : progress} />
+          <Progress value={progress >= 100 ? 100 : progress} />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <a href="https://comix.vercel.app">Home Page</a> |
+  <a href="https://comix-dev.vercel.app">Home Page</a> |
   <a href="https://www.linkedin.com/in/hthantoo/">LinkedIn</a> |
   <a href="https://bsky.app/profile/heinthantoo.bsky.social">BlueSky</a>
 </div>
@@ -31,7 +31,7 @@ With Comix, you can:
 
 Check out **Comix** live! Visit the platform to start tracking your GitHub commits and join the global leaderboard:
 
-<a href="https://comix.vercel.app">https://comix.vercel.app</a>
+<a href="https://comix-dev.vercel.app">https://comix-dev.vercel.app</a>
 
 > [!NOTE]
 > Comix is an early-stage product, and we welcome any feedback to help us improve the platform.
