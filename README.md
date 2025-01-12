@@ -101,11 +101,45 @@ DB_URL=
 # Redis
 REDIS_URL=
 
-# GitHub GraphQL AP
+# GitHub GraphQL API
 NEXT_PUBLIC_GITHUB_GQL_API=https://api.github.com/graphql
 ```
 
 ### Installation
+
+There are two ways to run Comix locally:
+
+1. **With Docker**: If you have Docker installed, you can run the app with Docker Compose. Check out the [Docker Installation](#docker-installation) section.
+2. **Manual Installation**: You can also run the app manually by following the [Manual Installation](#manual-installation) steps.
+
+#### Docker Installation
+
+Docker Compose is the easiest way to run Comix locally. Make sure you have Docker installed on your machine.
+
+1. This command will build containers for the app, postgres, and redis. The app will be available at `http://localhost:3000`.
+
+   ```sh
+   docker-compose up
+   ```
+
+   These are the default urls to access the services:
+
+   ```sh
+    # Postgres url
+    DB_URL=postgresql://comix_user:comix_password@db/comix_dev_db?sslmode=disable
+
+    # Redis
+    REDIS_URL=redis://cache:6379/0
+   ```
+
+2. Run the database migrations:
+
+   ```sh
+    docker-compose exec app npm run db:generate
+    docker-compose exec app npm run db:migrate
+   ```
+
+#### Manual Installation
 
 1. **Install Dependencies:**
 
