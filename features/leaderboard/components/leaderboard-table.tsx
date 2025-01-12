@@ -31,7 +31,7 @@ const LeaderboardTable = () => {
           <TableHead className="font-heading text-body4 font-medium">
             Rank
           </TableHead>
-          <TableHead className="flex-1 font-heading text-body4 font-medium">
+          <TableHead className="font-heading text-body4 font-medium">
             User
           </TableHead>
           <TableHead className="text-center font-heading text-body4 font-medium">
@@ -48,7 +48,7 @@ const LeaderboardTable = () => {
             <TableCell className="sm:text-h5">
               {String(idx + 1).padStart(4, "0")}
             </TableCell>
-            <TableCell className="flex flex-1 items-center">
+            <TableCell className="flex items-center">
               <UserButton user={user} />
               <RankBadge index={idx} />
             </TableCell>
