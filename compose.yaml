@@ -1,0 +1,59 @@
+services:
+  app:
+    depends_on:
+      cache:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - path: ./.env.local
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./next.config.js
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
+
+  db:
+    image: postgres:16.3
+    container_name: comix-postgres-db
+    environment:
+      POSTGRES_DB: comix_dev_db
+      POSTGRES_USER: comix_user
+      POSTGRES_PASSWORD: comix_password
+    volumes:
+      - comix:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "comix_user", "-d", "comix_dev_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:alpine
+    container_name: comix-redis
+    volumes:
+      - comix:/data
+    ports:
+      - "6179:6379"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  comix:
+

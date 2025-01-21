@@ -107,7 +107,7 @@ const DailyCommit = ({ className }: { className?: string }) => {
             you always commit those code
           </p>
         </div>
-        <EditCommitGoal />
+        {progress <= 100 ? <EditCommitGoal /> : null}
       </div>
 
       <div className="flex items-center gap-4">
