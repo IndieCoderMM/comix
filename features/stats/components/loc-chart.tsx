@@ -22,6 +22,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import dayjs from "dayjs";
 import { useMemo } from "react";
 
 type DailyLoc = {
@@ -30,15 +31,44 @@ type DailyLoc = {
 };
 
 const LocChart = ({ data }: { data: DailyLoc[] }) => {
-  const { totalLines, averageLines, todayLines } = useMemo(() => {
+  const { totalLines, averageLines, todayLines, plotData } = useMemo(() => {
+    const startDate = dayjs().subtract(7, "day");
+
+    const plotData = [];
+
+    for (let i = 0; i < 7; i++) {
+      const date = dayjs(startDate).add(i, "day");
+
+      const dataByDay = data.find((item) =>
+        date.isSame(dayjs(item.date), "day"),
+      );
+      if (dataByDay) {
+        plotData.push(dataByDay);
+      } else {
+        plotData.push({
+          date: date.toISOString(),
+          lines: 0,
+        });
+      }
+    }
+
+    console.log("plotData", JSON.stringify(plotData, null, 2));
+
     const totalLines = data.reduce((acc, item) => acc + item.lines, 0);
     const averageLines = totalLines / data.length;
 
     const todayData = data.find(
       (item) => item.date === new Date().toISOString().split("T")[0],
     );
-    return { totalLines, averageLines, todayLines: todayData?.lines ?? 0 };
+    return {
+      totalLines,
+      averageLines,
+      todayLines: todayData?.lines ?? 0,
+      plotData,
+    };
   }, [data]);
+
+  console.log("loc-chart", JSON.stringify(data, null, 2));
 
   return (
     <Card className="shadow-none">
@@ -66,7 +96,7 @@ const LocChart = ({ data }: { data: DailyLoc[] }) => {
               left: -4,
               right: -4,
             }}
-            data={data}
+            data={plotData}
           >
             <Bar
               dataKey="lines"
