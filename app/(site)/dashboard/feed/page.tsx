@@ -1,6 +1,8 @@
+import LoadingSpinner from "@/components/shared/loading-spinner";
 import FeedHeader from "@/features/repo/sections/feed-header";
 import RepoFeed from "@/features/repo/sections/repo-feed";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Feed - Comix",
@@ -9,10 +11,12 @@ export const metadata: Metadata = {
 
 const FeedPage = () => {
   return (
-    <div className="w-full pb-10 lg:pb-20">
-      <FeedHeader />
-      <RepoFeed />
-    </div>
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className="w-full pb-10 lg:pb-20">
+        <FeedHeader />
+        <RepoFeed />
+      </div>
+    </Suspense>
   );
 };
 

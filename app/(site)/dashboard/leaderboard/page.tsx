@@ -1,6 +1,8 @@
+import LoadingSpinner from "@/components/shared/loading-spinner";
 import LeaderboardTable from "@/features/leaderboard/components/leaderboard-table";
 import { Metadata } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Leaderboard - Comix",
@@ -9,20 +11,22 @@ export const metadata: Metadata = {
 
 const LeaderboardPage = () => {
   return (
-    <div className="max-container">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Image
-          src="/assets/icons/diamond-crown.svg"
-          width={100}
-          height={100}
-          alt="Leaderboard"
-        />
-        <h1 className="font-heading text-h6 text-primary sm:text-h4">
-          Top Committers Leaderboard
-        </h1>
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className="max-container">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Image
+            src="/assets/icons/diamond-crown.svg"
+            width={100}
+            height={100}
+            alt="Leaderboard"
+          />
+          <h1 className="font-heading text-h6 text-primary sm:text-h4">
+            Top Committers Leaderboard
+          </h1>
+        </div>
+        <LeaderboardTable />
       </div>
-      <LeaderboardTable />
-    </div>
+    </Suspense>
   );
 };
 

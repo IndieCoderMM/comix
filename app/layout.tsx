@@ -16,7 +16,7 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Comix - Fun way to grow your coding fskills",
+  title: "Comix - Fun way to grow your coding skills",
   description:
     "Comix is a platform that helps you to grow your skills by making coding fun and rewarding.",
 };
