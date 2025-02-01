@@ -18,32 +18,32 @@
     width: 12px;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: #eee;
-    border-left: 1px solid #aaa;
-  }
+  /*::-webkit-scrollbar-track {*/
+  /*  background-color: #eee;*/
+  /*  border-left: 1px solid #aaa;*/
+  /*}*/
+  /**/
+  /*::-webkit-scrollbar-thumb {*/
+  /*  background-clip: padding-box;*/
+  /*  border-radius: 999px;*/
+  /*  background-color: #a4a4f5;*/
+  /*  border-color: #7a7af5;*/
+  /*  border-radius: 8px;*/
+  /*}*/
+  /**/
+  /*::-webkit-scrollbar-thumb:hover {*/
+  /*  background-color: #7a7af5;*/
+  /*}*/
 
-  ::-webkit-scrollbar-thumb {
-    background-clip: padding-box;
-    border-radius: 999px;
-    background-color: #a4a4f5;
-    border-color: #7a7af5;
-    border-radius: 8px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #7a7af5;
-  }
-
-  html.dark ::-webkit-scrollbar-track {
-    background-color: #333;
-    border-color: #555;
-  }
-
-  html.dark ::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-color: #777;
-  }
+  /*html.dark ::-webkit-scrollbar-track {*/
+  /*  background-color: #333;*/
+  /*  border-color: #555;*/
+  /*}*/
+  /**/
+  /*html.dark ::-webkit-scrollbar-thumb {*/
+  /*  background-color: #555;*/
+  /*  border-color: #777;*/
+  /*}*/
 
   :root {
     --background: 0 0% 100%;
@@ -129,6 +129,7 @@
   .inner-container {
     @apply mx-auto w-full px-2 sm:px-4 md:px-0 md:max-w-[80%];
   }
+
 }
 
 @layer base {
@@ -139,4 +140,54 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-opacity-50 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-transparent;
+  }
+
+  .border-linear {
+    @apply border border-transparent z-20;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    background-origin: border-box;
+  }
+
+  .bg-bento-card {
+    background-image: linear-gradient(200deg, rgba(125, 139, 172, .2) -19.36%, rgba(125, 139, 172, .04) 35.39%, rgba(125, 139, 172, 0) 81.1%);
+  }
+}
+
+
+.card-spotlight {
+  position: relative;
+  border-radius: 1.5rem;
+  border: 1px solid #222;
+  background-color: #111;
+  padding: 2rem;
+  overflow: hidden;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.05);
+}
+
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 0.6;
 }
