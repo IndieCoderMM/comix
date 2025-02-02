@@ -76,7 +76,7 @@ const LocChart = ({ data }: { data: DailyLoc[] }) => {
         <CardDescription>Today</CardDescription>
         <CardTitle className="text-4xl tabular-nums">
           {todayLines}
-          <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
+          <span className="font-body text-sm font-normal tracking-normal text-muted-foreground">
             Lines of Code
           </span>
         </CardTitle>

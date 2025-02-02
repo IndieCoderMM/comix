@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { getSession } from "@/utils/auth";
 import type { Metadata } from "next";
-import { Nunito_Sans, Poppins } from "next/font/google";
+import { Inter, Nunito_Sans, Poppins } from "next/font/google";
 import Providers from "./providers";
 
 const poppins = Poppins({
@@ -12,6 +12,12 @@ const poppins = Poppins({
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
@@ -30,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${nunitoSans.variable} font-nunito antialiased`}
+        className={`${poppins.variable} ${nunitoSans.variable} ${inter.variable} font-body antialiased`}
       >
         <Providers session={session}>{children}</Providers>
       </body>

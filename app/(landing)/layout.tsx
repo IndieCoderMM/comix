@@ -1,4 +1,3 @@
-import Footer from "@/features/landing/layouts/footer";
 import Header from "@/features/landing/layouts/header";
 import { getSession } from "@/utils/auth";
 import { redirect } from "next/navigation";
@@ -15,7 +14,6 @@ const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       {children}
-      <Footer />
     </>
   );
 };
