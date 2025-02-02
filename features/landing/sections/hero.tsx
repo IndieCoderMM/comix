@@ -3,6 +3,7 @@ import Contributors from "../components/contributors";
 import HeroButton from "../components/hero-button";
 import { Spotlight } from "../components/spotlight";
 import Stack from "../components/stack";
+import { content } from "../constants/content";
 import { contributors } from "../constants/contributors";
 import { stack } from "../constants/stack";
 
@@ -21,12 +22,11 @@ const Hero = () => {
         <Spotlight />
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center p-4 pt-20 md:pt-0">
           <h1 className="text-gradient text-center text-h1">
-            Gamified Commit Tracker & <br />
-            GitHub Contribution Visualizer
+            A GitHub Commit Tracker <br />
+            That Makes Coding More Fun
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-center text-body1 text-neutral-300">
-            Earn rewards, track progress, and grow your skills while having fun.
-            Start your journey today!
+            {content.hero.description}
           </p>
           <div className="my-10">
             <HeroButton
@@ -34,7 +34,7 @@ const Hero = () => {
               as="button"
               className="flex items-center space-x-4 text-white"
             >
-              <span className="font-body text-body3">Join Now</span>
+              <span className="font-body text-body3">{content.hero.cta}</span>
               <IconArrowNarrowRight />
             </HeroButton>
           </div>

@@ -30,11 +30,13 @@ const MacbookScroll = ({
   showGradient,
   title,
   badge,
+  className,
 }: {
   src?: string;
   showGradient?: boolean;
   title?: string | React.ReactNode;
   badge?: React.ReactNode;
+  className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -75,13 +77,11 @@ const MacbookScroll = ({
           translateY: textTransform,
           opacity: textOpacity,
         }}
-        className="mb-20 text-center text-3xl font-bold text-neutral-800 dark:text-white"
+        className={
+          "text-gradient mb-20 text-center text-h2 text-neutral-300 dark:text-neutral-300"
+        }
       >
-        {title || (
-          <span>
-            This Macbook is built with Tailwindcss. <br /> No kidding.
-          </span>
-        )}
+        {title}
       </motion.h2>
       {/* Lid */}
       <Lid

@@ -8,6 +8,7 @@ import {
   IconTableColumn,
 } from "@tabler/icons-react";
 import { BentoGrid, BentoGridItem } from "../components/bento";
+import { content } from "../constants/content";
 
 const Features = () => {
   return (
@@ -19,11 +20,10 @@ const Features = () => {
           id="features"
           className="text-gradient text-center text-h2 font-semibold"
         >
-          Features
+          {content.features.heading}
         </h2>
         <p className="mt-4 max-w-lg text-center text-body1 text-neutral-300">
-          Explore the key features of our platform and discover the endless
-          possibilities.
+          {content.features.description}
         </p>
         <div className="relative mt-10 flex w-full overflow-hidden md:items-center md:justify-center">
           <BentoGrid className="max-container mx-auto">
@@ -49,58 +49,57 @@ const Skeleton = () => (
 
 const items = [
   {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas and inventions.",
+    title: content.features.list[0].title,
+    description: content.features.list[0].description,
     header: <Skeleton />,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
     span: "col-span-5",
   },
   {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
+    title: content.features.list[1].title,
+    description: content.features.list[1].description,
     header: <Skeleton />,
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",
   },
   {
-    title: "The Art of Design",
-    description: "Discover the beauty of thoughtful and functional design.",
+    title: content.features.list[2].title,
+    description: content.features.list[2].description,
     header: <Skeleton />,
     icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
     span: "col-span-3",
   },
   {
-    title: "The Power of Communication",
-    description:
-      "Understand the impact of effective communication in our lives.",
+    title: content.features.list[3].title,
+    description: content.features.list[3].description,
     header: <Skeleton />,
     icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
     span: "col-span-6",
   },
   {
-    title: "The Pursuit of Knowledge",
-    description: "Join the quest for understanding and enlightenment.",
+    title: content.features.list[4].title,
+    description: content.features.list[4].description,
     header: <Skeleton />,
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
     span: "col-span-6",
   },
   {
-    title: "The Joy of Creation",
-    description: "Experience the thrill of bringing ideas to life.",
+    title: content.features.list[5].title,
+    description: content.features.list[5].description,
     header: <Skeleton />,
     icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",
   },
   {
-    title: "The Spirit of Adventure",
-    description: "Embark on exciting journeys and thrilling discoveries.",
+    title: content.features.list[6].title,
+    description: content.features.list[6].description,
     header: <Skeleton />,
     icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",
   },
   {
-    title: "The Spirit of Adventure",
-    description: "Embark on exciting journeys and thrilling discoveries.",
+    title: content.features.list[7].title,
+    description: content.features.list[7].description,
     header: <Skeleton />,
     icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",

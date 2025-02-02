@@ -4,7 +4,6 @@ import {
   IconBrandLinkedin,
   IconWorld,
 } from "@tabler/icons-react";
-import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
@@ -13,13 +12,6 @@ const Footer = () => {
       <div className="max-container px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex flex-shrink-0 items-center justify-center sm:justify-start">
-            <Image
-              src="/assets/logo.png"
-              width={40}
-              height={40}
-              alt="Comix"
-              className="object-contain"
-            />
             <Link
               href="/"
               title="Commity"
@@ -36,7 +28,7 @@ const Footer = () => {
                 title="Our Repo"
                 target="_blank"
                 rel="noopener"
-                className="block text-primary transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                className="block text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
               >
                 <IconBrandGithub />
               </Link>
@@ -48,7 +40,7 @@ const Footer = () => {
                 title="My Website"
                 target="_blank"
                 rel="noopener"
-                className="block text-primary transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                className="block text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
               >
                 <IconWorld />
               </Link>
@@ -60,7 +52,7 @@ const Footer = () => {
                 title="My LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-primary transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                className="block text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
               >
                 <IconBrandLinkedin />
               </Link>
@@ -72,7 +64,7 @@ const Footer = () => {
                 title="BlueSky"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative block text-primary transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
+                className="relative block text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80"
               >
                 <IconBrandBluesky />
               </Link>
@@ -81,7 +73,7 @@ const Footer = () => {
         </div>
         <div className="mt-2 flex items-center justify-between">
           <p className="text-caption text-white">Built with 🥲 by IndieCoder</p>
-          <p className="text-caption text-white">© Copyright 2025 Comix</p>
+          <p className="text-caption text-white">© Copyright 2025</p>
         </div>
       </div>
     </section>

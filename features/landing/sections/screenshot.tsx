@@ -1,15 +1,12 @@
 import Link from "next/link";
 import MacbookScroll from "../components/macbook-scroll";
+import { content } from "../constants/content";
 
-const DemoScreenshot = () => {
+const Screenshot = () => {
   return (
-    <div className="w-full overflow-hidden bg-black">
+    <div className="-mt-40 w-full overflow-hidden bg-black">
       <MacbookScroll
-        title={
-          <span>
-            This Macbook is built with Tailwindcss. <br /> No kidding.
-          </span>
-        }
+        title={content.dashboard.heading}
         badge={
           <Link href="https://peerlist.io/manuarora">
             <Badge className="h-10 w-10 -rotate-12 transform" />
@@ -64,4 +61,4 @@ const Badge = ({ className }: { className?: string }) => {
   );
 };
 
-export default DemoScreenshot;
+export default Screenshot;

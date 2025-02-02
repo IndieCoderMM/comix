@@ -60,7 +60,7 @@ const FloatingNav = ({
           className,
         )}
       >
-        <h1 className="font-heading text-white">Comix</h1>
+        <h1 className="font-heading font-bold text-white">Comix</h1>
         <div className="mx-12 flex items-center justify-center space-x-4">
           {navItems.map((navItem: any, idx: number) => (
             <Link
@@ -71,7 +71,9 @@ const FloatingNav = ({
               )}
             >
               <span className="block sm:hidden">{navItem.icon}</span>
-              <span className="hidden text-sm sm:block">{navItem.name}</span>
+              <span className="hidden text-caption sm:block">
+                {navItem.name}
+              </span>
             </Link>
           ))}
         </div>
