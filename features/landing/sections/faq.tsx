@@ -9,7 +9,7 @@ import { content } from "../constants/content";
 
 export const FAQ = () => (
   <div className="relative w-full bg-black py-20">
-    <div className="absolute inset-x-0 h-[700px] w-full scale-[0.80] transform rounded-full bg-purple-500 bg-gradient-to-r from-blue-800 to-purple-500 opacity-5 blur-3xl" />
+    <div className="absolute inset-x-0 h-[500px] w-full scale-[0.80] transform rounded-full bg-purple-500 bg-gradient-to-r from-blue-800 to-purple-500 opacity-5 blur-3xl" />
     <ShootingStars />
     <div className="max-container">
       <div className="flex flex-col gap-10">

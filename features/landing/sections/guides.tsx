@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/utils/tailwind";
-import { useEffect, useState } from "react";
+import { useInView } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { content } from "../constants/content";
 
 const data = content.guides.steps;
@@ -8,13 +9,19 @@ const data = content.guides.steps;
 export function Guides() {
   const [featureOpen, setFeatureOpen] = useState<number>(0);
   const [timer, setTimer] = useState<number>(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prev) => prev + 10);
-    }, 10);
+    let interval: NodeJS.Timeout;
+    if (inView) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev + 10);
+      }, 10);
+    }
+
     return () => clearInterval(interval);
-  }, []);
+  }, [inView]);
 
   useEffect(() => {
     if (timer > 10000) {
@@ -31,7 +38,7 @@ export function Guides() {
             {content.guides.title}
           </h2>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2" ref={ref}>
           <div className="space-y-6">
             {data.map((item, index) => (
               <button
@@ -63,7 +70,7 @@ export function Guides() {
                 <img
                   alt={item.title}
                   className={cn(
-                    "absolute h-[500px] w-full transform-gpu rounded-lg object-cover transition-all duration-300",
+                    "absolute h-[500px] w-full transform-gpu rounded-lg object-fill transition-all duration-300",
                     featureOpen === index ? "scale-100" : "scale-70",
                     featureOpen > index ? "translate-y-full" : "",
                   )}

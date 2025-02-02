@@ -1,50 +1,80 @@
+import { featureImages, guideImages } from "./images";
+
 export const content = {
   hero: {
     description:
       "Set goals, earn rewards, and compete on a global leaderboard while staying consistent with your commits.",
-    cta: "Join Now",
+    cta: "Join Now For Free",
   },
   stats: [
-    { number: 10, unit: "millions", description: "Commits Tracked" },
-    { number: 5, unit: "thousands", description: "Developers Joined" },
-    { number: 100, unit: "+", description: "Projects Shared" },
+    {
+      number: 10,
+      unit: "Million+",
+      description:
+        "Commits tracked and counted towards developer goals, keeping coding habits strong.",
+    },
+    {
+      number: 5,
+      unit: "Thousand+",
+      description:
+        "Developers have joined the platform to stay accountable and make committing fun.",
+    },
+    {
+      number: 100,
+      unit: "+",
+      description:
+        "Projects shared and boosted by developers looking to gain visibility in the community.",
+    },
   ],
   dashboard: {
-    heading: "Your GitHub Contributions, Visualized",
+    heading: "Gamify Your GitHub Contributions",
+    srcImg: guideImages.dashboard,
   },
   features: {
     heading: "Why You'll Love This",
     description:
       "We took commit tracking and made it fun. Level up, climb leaderboards, and boost your repos!",
     list: [
-      { title: "Daily Goals", description: "Set and crush your commit goals." },
+      {
+        title: "Daily Goals",
+        description: "Set and crush your commit goals.",
+
+        srcImg: featureImages.commitGoal,
+      },
       {
         title: "XP & Coins",
         description: "Earn rewards for your consistency.",
+        srcImg: featureImages.challenge,
       },
       {
         title: "Global Leaderboard",
         description: "Compete with developers worldwide.",
+        srcImg: featureImages.leaderboard,
       },
       {
         title: "Boost Repos",
         description: "Use coins to promote your projects.",
+        srcImg: featureImages.feed,
       },
       {
         title: "Real-Time Stats",
         description: "Get insights into your contributions.",
+        srcImg: featureImages.stat,
       },
       {
         title: "Ranking System",
         description: "Unlock new tiers as you level up.",
+        srcImg: featureImages.ranking,
       },
       {
         title: "Profile Showcase",
         description: "Show off your progress and top repos.",
+        srcImg: featureImages.repo,
       },
       {
         title: "Open Source",
         description: "Contribute and shape the platform.",
+        srcImg: featureImages.repo,
       },
     ],
   },
@@ -54,31 +84,27 @@ export const content = {
     steps: [
       {
         step: 1,
-        title: "Login",
-        content: "Login with GitHub and set your commit goal.",
-        srcImage:
-          "https://images.unsplash.com/photo-1717501219716-b93a67d2f7b2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8",
+        title: "Set commit goal",
+        content: "Target how many LOC you want to write today.",
+        srcImage: guideImages.commitGoal,
       },
       {
         step: 2,
-        title: "Aim commit goal",
+        title: "Workon your projects",
         content: "Start coding and track your progress.",
-        srcImage:
-          "https://images.unsplash.com/photo-1717501219074-943fc738e5a2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8M3x8fGVufDB8fHx8fA%3D%3D",
+        srcImage: guideImages.challenge,
       },
       {
         step: 3,
         title: "Earn rewards",
         content: "Earn XP, coins, and climb the leaderboard.",
-        srcImage:
-          "https://images.unsplash.com/photo-1717501218636-a390f9ac5957?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Nnx8fGVufDB8fHx8fA%3D%3D",
+        srcImage: guideImages.leaderboard,
       },
       {
         step: 4,
         title: "Boost projects",
-        content: "Boost your repos and flex your ranking.",
-        srcImage:
-          "https://images.unsplash.com/photo-1717501219781-54ac9d09051b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8N3x8fGVufDB8fHx8fA%3D%3D",
+        content: "Boost your repos and gain visibility.",
+        srcImage: guideImages.repo,
       },
     ],
   },

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   IconBrandBluesky,
   IconBrandGithub,
@@ -5,8 +7,29 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const emojis = ["❤️", "💔", "🥲", "🤩", "☕️"];
 
 const Footer = () => {
+  const [featureOpen, setFeatureOpen] = useState<number>(0);
+  const [timer, setTimer] = useState<number>(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => prev + 10);
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (timer > 3000) {
+      setFeatureOpen((prev) => (prev + 1) % emojis.length);
+      setTimer(0);
+    }
+  }, [timer]);
+
   return (
     <section className="relative bg-transparent pb-8 pt-12">
       <div className="max-container px-4 sm:px-6 lg:px-8">
@@ -72,7 +95,18 @@ const Footer = () => {
           </ul>
         </div>
         <div className="mt-2 flex items-center justify-between">
-          <p className="text-caption text-white">Built with 🥲 by IndieCoder</p>
+          <p className="text-caption text-white">
+            Built with
+            <span> {emojis[featureOpen]} </span>
+            by{" "}
+            <Link
+              href="https://github.com/indiecodermm"
+              target="_blank"
+              className="underline"
+            >
+              IndieCoder
+            </Link>
+          </p>
           <p className="text-caption text-white">© Copyright 2025</p>
         </div>
       </div>

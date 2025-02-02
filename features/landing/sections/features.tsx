@@ -1,12 +1,6 @@
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
+import { cn } from "@/utils/tailwind";
+import { IconGitCommit } from "@tabler/icons-react";
+import Image from "next/image";
 import { BentoGrid, BentoGridItem } from "../components/bento";
 import { content } from "../constants/content";
 
@@ -43,66 +37,90 @@ const Features = () => {
     </div>
   );
 };
-const Skeleton = () => (
-  <div className="flex h-full min-h-[6rem] w-full flex-1 rounded-xl"></div>
+
+const FeatureCard = ({
+  src,
+  title,
+  className,
+}: {
+  src: string;
+  title: string;
+  className?: string;
+}) => (
+  <div className="relative flex h-full min-h-[6rem] w-full flex-1 overflow-hidden rounded-xl">
+    <Image
+      src={src}
+      alt={title}
+      width={500}
+      height={500}
+      className={cn("h-auto w-full object-cover object-left-top", className)}
+    />
+  </div>
 );
+
+const features = content.features.list;
 
 const items = [
   {
-    title: content.features.list[0].title,
-    description: content.features.list[0].description,
-    header: <Skeleton />,
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
-    span: "col-span-5",
-  },
-  {
-    title: content.features.list[1].title,
-    description: content.features.list[1].description,
-    header: <Skeleton />,
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    title: features[0].title,
+    description: features[0].description,
+    header: <FeatureCard title={features[0].title} src={features[0].srcImg} />,
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",
   },
   {
-    title: content.features.list[2].title,
-    description: content.features.list[2].description,
-    header: <Skeleton />,
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    title: features[4].title,
+    description: features[4].description,
+    header: <FeatureCard title={features[4].title} src={features[4].srcImg} />,
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
     span: "col-span-3",
   },
   {
-    title: content.features.list[3].title,
-    description: content.features.list[3].description,
-    header: <Skeleton />,
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    title: features[2].title,
+    description: features[2].description,
+    header: <FeatureCard title={features[2].title} src={features[2].srcImg} />,
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
+    span: "col-span-5",
+  },
+  {
+    title: features[1].title,
+    description: features[1].description,
+    header: <FeatureCard title={features[1].title} src={features[1].srcImg} />,
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
     span: "col-span-6",
   },
   {
-    title: content.features.list[4].title,
-    description: content.features.list[4].description,
-    header: <Skeleton />,
-    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    title: features[3].title,
+    description: features[3].description,
+    header: <FeatureCard title={features[3].title} src={features[3].srcImg} />,
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
     span: "col-span-6",
   },
   {
-    title: content.features.list[5].title,
-    description: content.features.list[5].description,
-    header: <Skeleton />,
-    icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
+    title: features[5].title,
+    description: features[5].description,
+    header: (
+      <FeatureCard
+        title={features[5].title}
+        src={features[5].srcImg}
+        className="object-contain object-center"
+      />
+    ),
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
     span: "col-span-4",
   },
   {
-    title: content.features.list[6].title,
-    description: content.features.list[6].description,
-    header: <Skeleton />,
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
-    span: "col-span-4",
-  },
-  {
-    title: content.features.list[7].title,
-    description: content.features.list[7].description,
-    header: <Skeleton />,
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
-    span: "col-span-4",
+    title: features[7].title,
+    description: features[7].description,
+    header: (
+      <FeatureCard
+        title={features[7].title}
+        src={features[7].srcImg}
+        className="object-cover object-top"
+      />
+    ),
+    icon: <IconGitCommit className="h-4 w-4 text-neutral-500" />,
+    span: "col-span-8",
   },
 ];
 

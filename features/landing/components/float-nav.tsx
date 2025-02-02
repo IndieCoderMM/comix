@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils/tailwind";
-import { IconFingerprint } from "@tabler/icons-react";
+import { IconHomeStats } from "@tabler/icons-react";
 import {
   AnimatePresence,
   motion,
@@ -9,10 +9,12 @@ import {
 } from "motion/react";
 import Link from "next/link";
 import { JSX, useState } from "react";
+import SigninButton from "./signin-button";
 
 const FloatingNav = ({
   navItems,
   className,
+  isLoggedIn,
 }: {
   navItems: {
     name: string;
@@ -20,6 +22,7 @@ const FloatingNav = ({
     icon?: JSX.Element;
   }[];
   className?: string;
+  isLoggedIn?: boolean;
 }) => {
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
@@ -60,7 +63,9 @@ const FloatingNav = ({
           className,
         )}
       >
-        <h1 className="font-heading font-bold text-white">Comix</h1>
+        <Link href="/" className="flex items-center">
+          <h1 className="font-heading font-bold text-white">Comix</h1>
+        </Link>
         <div className="mx-12 flex items-center justify-center space-x-4">
           {navItems.map((navItem: any, idx: number) => (
             <Link
@@ -77,11 +82,17 @@ const FloatingNav = ({
             </Link>
           ))}
         </div>
-        <button className="relative flex items-center justify-center gap-2 rounded-full border border-white/[0.2] px-4 py-2 text-sm font-medium text-white">
-          <IconFingerprint className="h-4 w-4" />
-          <span>Login</span>
-          <span className="absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-        </button>
+        {isLoggedIn ? (
+          <Link href={"/dashboard"}>
+            <button className="relative flex items-center justify-center gap-2 rounded-full border border-white/[0.2] px-4 py-2 text-sm font-medium text-white">
+              <IconHomeStats className="h-4 w-4" />
+              <span>Dashboard</span>
+              <span className="absolute inset-x-0 -bottom-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+            </button>
+          </Link>
+        ) : (
+          <SigninButton text="Login" />
+        )}
       </motion.div>
     </AnimatePresence>
   );

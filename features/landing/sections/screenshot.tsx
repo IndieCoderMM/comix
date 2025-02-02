@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { images } from "@/utils/images";
+import Image from "next/image";
 import MacbookScroll from "../components/macbook-scroll";
 import { content } from "../constants/content";
 
@@ -8,11 +9,15 @@ const Screenshot = () => {
       <MacbookScroll
         title={content.dashboard.heading}
         badge={
-          <Link href="https://peerlist.io/manuarora">
-            <Badge className="h-10 w-10 -rotate-12 transform" />
-          </Link>
+          <Image
+            src={images.logo}
+            alt="comix"
+            width={50}
+            height={50}
+            className="-rotate-45 rounded-full border-2 border-white object-contain"
+          />
         }
-        src={`/linear.webp`}
+        src={content.dashboard.srcImg}
         showGradient={false}
       />
     </div>

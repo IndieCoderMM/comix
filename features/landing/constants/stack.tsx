@@ -1,8 +1,7 @@
 import {
-  IconBrandFramerMotion,
   IconBrandNextjs,
-  IconBrandReact,
   IconBrandSupabase,
+  IconBrandTailwind,
   IconBrandVercelFilled,
 } from "@tabler/icons-react";
 
@@ -14,12 +13,8 @@ export const stack = [
     icon: <IconBrandNextjs className={iconClass} />,
   },
   {
-    name: "React",
-    icon: <IconBrandReact className={iconClass} />,
-  },
-  {
-    name: "Framer Motion",
-    icon: <IconBrandFramerMotion className={iconClass} />,
+    name: "Tailwind CSS",
+    icon: <IconBrandTailwind className={iconClass} />,
   },
   {
     name: "Supabase",
